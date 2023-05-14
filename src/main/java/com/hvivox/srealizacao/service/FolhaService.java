@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface FolhaService {
     Page<Folha> findAll(Specification<Folha> spec, Pageable pageable );
-    Optional<Folha> findById(Integer idFolha);
+    Folha findById(Integer idFolha);
 
     Folha save(Folha folha);
 

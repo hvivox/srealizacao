@@ -33,7 +33,7 @@ public class Gratidao {
 
     @NotNull
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)//optional=false cria inner join e não left join
     @JoinColumn(name = "IDFOLHA", nullable = false)
     private Folha folha;
 

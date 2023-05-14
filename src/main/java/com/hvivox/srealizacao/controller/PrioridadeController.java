@@ -39,7 +39,7 @@ public class PrioridadeController {
 
     }
 
-    @DeleteMapping("{folhaId}")
+   /* @DeleteMapping("{folhaId}")
     public ResponseEntity<String> deletarTodasPrioridades(@PathVariable(value = "folhaId") Integer folhaid ){
       //  log.debug("DELETE deletar todas as prioridades com ID {} ", courseId);
         Optional<Folha> folhaOptional = folhaService.findById(folhaid);
@@ -50,6 +50,6 @@ public class PrioridadeController {
         prioridadeService.deleteTodosDaFolha( folhaOptional.get().getId() );
         //log.info("Prioridade deleteTodosDaFolha realizado com sucesso IDFolha {} ", courseId);
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully.");
-    }
+    }*/
 
 }

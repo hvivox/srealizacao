@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "PRIORIDADE")
+@Table(name = "PRIORIDADE", indexes = { @Index(name = "indx_id", columnList = "IDPRIORIDADE") })
 public class Prioridade implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,8 +36,8 @@ public class Prioridade implements Serializable {
 
     @NotNull
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDFOLHA", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "IDFOLHA", nullable = false, foreignKey = @ForeignKey(name = "fk_pagamento_pedido"))
     private Folha folha;
 
 
