@@ -1,6 +1,5 @@
 package com.hvivox.srealizacao.controller;
 
-import com.hvivox.srealizacao.model.Folha;
 import com.hvivox.srealizacao.model.Prioridade;
 import com.hvivox.srealizacao.service.FolhaService;
 import com.hvivox.srealizacao.service.PrioridadeService;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Log4j2

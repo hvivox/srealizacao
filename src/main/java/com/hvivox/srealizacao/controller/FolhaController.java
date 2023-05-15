@@ -48,52 +48,13 @@ public class FolhaController {
     
     @GetMapping("{idFolha}")
     public Folha getById(@PathVariable(value = "idFolha") Integer idFolha) {
-        Folha folhaOptional = folhaService.findById(idFolha);
-        return folhaOptional;
+        Folha folhaEncontrada = folhaService.findById(idFolha);
+        return folhaEncontrada;
     }
     
     
     @PostMapping
     public ResponseEntity<Folha> save(@RequestBody Folha folha) {
-        log.debug("POST Salvar dados {} ", folha.toString());
-        List<Prioridade> prioridades = new ArrayList<>();
-        List<Restricao> restricoes = new ArrayList<>();
-        List<Gratidao> gratidoes = new ArrayList<>();
-        List<Aprendizagem> aprendizagens = new ArrayList<>();
-        
-        for (Prioridade prioridadeEncontrada : folha.getPrioridadeList()) {
-            Prioridade prioridade = new Prioridade();
-            BeanUtils.copyProperties(prioridadeEncontrada, prioridade);
-            prioridade.setFolha(folha);
-            prioridades.add(prioridade);
-        }
-        
-        for (Restricao restricaoEncontrada : folha.getRestricaoList()) {
-            Restricao restricao = new Restricao();
-            BeanUtils.copyProperties(restricaoEncontrada, restricao);
-            restricao.setFolha(folha);
-            restricoes.add(restricao);
-        }
-        
-        for (Gratidao gratidaoEncontrada : folha.getGratidaoList()) {
-            Gratidao gratidao = new Gratidao();
-            BeanUtils.copyProperties(gratidaoEncontrada, gratidao);
-            gratidao.setFolha(folha);
-            gratidoes.add(gratidao);
-        }
-        
-        for (Aprendizagem aprendizagemEncontrada : folha.getAprendizagemList()) {
-            Aprendizagem aprendizagem = new Aprendizagem();
-            BeanUtils.copyProperties(aprendizagemEncontrada, aprendizagem);
-            aprendizagem.setFolha(folha);
-            aprendizagens.add(aprendizagem);
-        }
-        
-        folha.setPrioridadeList(prioridades);
-        folha.setRestricaoList(restricoes);
-        folha.setGratidaoList(gratidoes);
-        folha.setAprendizagemList(aprendizagens);
-        
         return ResponseEntity.status(HttpStatus.CREATED).body(folhaService.save(folha));
     }
     
@@ -102,77 +63,15 @@ public class FolhaController {
     @Transactional
     public ResponseEntity<Object> update(@PathVariable Integer idFolha, @RequestBody Folha folhaInput) {
         // log.debug("PUT Update dados {} e idFolha:{} ", folha.toString(), idFolha);
-        Folha folhaEncontradaOptional = folhaService.findById(idFolha);
+        Folha folhaEncontrada = folhaService.findById(idFolha);
         
-        
-        if (folhaEncontradaOptional == null) {
+        if (folhaEncontrada == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Folha não encontrada!");
             
         } else {
             
-            Folha folhaEncontrada = folhaEncontradaOptional;
-            folhaEncontrada.setFoco(folhaInput.getFoco());
-            folhaEncontrada.setDtarealizacao(folhaInput.getDtarealizacao());
-            folhaEncontrada.setNotadia(folhaInput.getNotadia());
-            folhaEncontrada.setObservacao(folhaInput.getObservacao());
-            folhaEncontrada.setStatus(folhaInput.getStatus());
-            
-            Folha folhaObjectID = new Folha();
-            folhaObjectID.setId(folhaEncontrada.getId());
-            
-            
-            prioridadeService.deleteTodosDaFolha(folhaEncontrada.getId());
-            if (!folhaInput.getPrioridadeList().isEmpty()) {
-                
-                for (Prioridade prioridadeEncontrada : folhaInput.getPrioridadeList()) {
-                    Prioridade prioridade = new Prioridade();
-                    BeanUtils.copyProperties(prioridadeEncontrada, prioridade, "folha");
-                    prioridade.setFolha(folhaObjectID);
-                    // log.debug("atributo prioridade {}", prioridade);
-                    folhaEncontrada.getPrioridadeList().add(prioridade);
-                }
-                
-            }
-            
-            restricaoService.deleteTodosDaFolha(folhaEncontrada.getId());
-            if (!folhaInput.getRestricaoList().isEmpty()) {
-                
-                for (Restricao restricaoEncontrada : folhaInput.getRestricaoList()) {
-                    Restricao restricao = new Restricao();
-                    BeanUtils.copyProperties(restricaoEncontrada, restricao, "folha");
-                    restricao.setFolha(folhaObjectID);
-                    folhaEncontrada.getRestricaoList().add(restricao);
-                }
-                
-            }
-            
-            
-            gratidaoService.deleteTodosDaFolha(folhaEncontrada.getId());
-            if (!folhaInput.getGratidaoList().isEmpty()) {
-                for (Gratidao gratidaoEncontrada : folhaInput.getGratidaoList()) {
-                    Gratidao gratidao = new Gratidao();
-                    BeanUtils.copyProperties(gratidaoEncontrada, gratidao, "folha");
-                    gratidao.setFolha(folhaObjectID);
-                    folhaEncontrada.getGratidaoList().add(gratidao);
-                }
-                
-            }
-            
-            
-            aprendizagemService.deleteTodosDaFolha(folhaEncontrada.getId());
-            if (!folhaInput.getAprendizagemList().isEmpty()) {
-                
-                for (Aprendizagem aprendizagemEncontrada : folhaInput.getAprendizagemList()) {
-                    Aprendizagem aprendizagem = new Aprendizagem();
-                    BeanUtils.copyProperties(aprendizagemEncontrada, aprendizagem, "folha");
-                    aprendizagem.setFolha(folhaObjectID);
-                    folhaEncontrada.getAprendizagemList().add(aprendizagem);
-                }
-                
-            }
-            
-            folhaEncontrada = folhaService.save(folhaEncontrada);
-            return ResponseEntity.status(HttpStatus.OK).body(folhaEncontrada);
+            Folha folhaAtualizada = folhaService.update(folhaEncontrada, folhaInput);
+            return ResponseEntity.status(HttpStatus.OK).body(folhaAtualizada);
             
         }
     }

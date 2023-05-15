@@ -2,6 +2,7 @@ package com.hvivox.srealizacao.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -49,18 +50,20 @@ public class Folha implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private Boolean status = false;
     
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "folha", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true )
     private List<Prioridade> prioridadeList = new ArrayList<>();
-    @JsonIgnore
+    
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "folha", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Restricao> restricaoList = new ArrayList<>();
-    @JsonIgnore
+    
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "folha", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Gratidao> gratidaoList = new ArrayList<>();
     
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "folha", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Aprendizagem> aprendizagemList = new ArrayList<>();
     
