@@ -1,15 +1,17 @@
 
 ‰
-java:S14883"gImmediately return this expression instead of assigning it to the temporary variable "folhaEncontrada".(¨½©İûÿÿÿÿ8·ùİé1
+java:S14885"gImmediately return this expression instead of assigning it to the temporary variable "folhaEncontrada".(¨½©İûÿÿÿÿ8àÃ«‚‚1
 ]
-java:S46849"@Replace this persistent entity with a simple POJO or DTO object.(¼Ù¯8Èùİé1
+java:S4684;"@Replace this persistent entity with a simple POJO or DTO object.(¼Ù¯8íÃ«‚‚1
 ]
-java:S4684@"@Replace this persistent entity with a simple POJO or DTO object.(â›ª8Éùİé1
+java:S4684B"@Replace this persistent entity with a simple POJO or DTO object.(±³ ¬8ô‘Ë‰‚1
+b
+java:S1128"@Remove this unused import 'com.hvivox.srealizacao.dto.FolhaDto'.(ãóÛñøÿÿÿÿ8™ÒË‰‚1
 ]
-java:S1128"@Remove this unused import 'org.springframework.beans.BeanUtils'.(ŠğÄÜ8ì¿…ê1
+java:S1128"@Remove this unused import 'org.springframework.beans.BeanUtils'.(ŠğÄÜ8™ÒË‰‚1
 M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8í¿…ê1
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8™ÒË‰‚1
 M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8í¿…ê1
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8™ÒË‰‚1
 Q
-java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8í¿…ê1
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8šÒË‰‚1

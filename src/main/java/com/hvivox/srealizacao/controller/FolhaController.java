@@ -1,5 +1,6 @@
 package com.hvivox.srealizacao.controller;
 
+import com.hvivox.srealizacao.dto.FolhaDto;
 import com.hvivox.srealizacao.model.*;
 import com.hvivox.srealizacao.service.*;
 import com.hvivox.srealizacao.specifications.SpecificationTemplate;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,15 +63,14 @@ public class FolhaController {
     
     @PutMapping("/{idFolha}")
     @Transactional
-    public ResponseEntity<Object> update(@PathVariable Integer idFolha, @RequestBody Folha folhaInput) {
+    public ResponseEntity<Object> update(@PathVariable Integer idFolha, @Valid @RequestBody Folha folhaInput ) {
         // log.debug("PUT Update dados {} e idFolha:{} ", folha.toString(), idFolha);
         Folha folhaEncontrada = folhaService.findById(idFolha);
-        
+       // Folha folhaInput = new Folha();
         if (folhaEncontrada == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Folha não encontrada!");
             
         } else {
-            
             Folha folhaAtualizada = folhaService.update(folhaEncontrada, folhaInput);
             return ResponseEntity.status(HttpStatus.OK).body(folhaAtualizada);
             

@@ -114,6 +114,7 @@ public class FolhaService {
             for (Prioridade prioridadeEncontrada : folhaInput.getPrioridadeList()) {
                 Prioridade prioridade = new Prioridade();
                 BeanUtils.copyProperties(prioridadeEncontrada, prioridade, "folha");
+                //prioridade.setFolha(folhaObjectID);
                 prioridade.setFolha(folhaObjectID);
                 // log.debug("atributo prioridade {}", prioridade);
                 folhaEncontrada.getPrioridadeList().add(prioridade);
@@ -125,6 +126,7 @@ public class FolhaService {
         if (!folhaInput.getRestricaoList().isEmpty()) {
     
             for (Restricao restricaoEncontrada : folhaInput.getRestricaoList()) {
+                
                 Restricao restricao = new Restricao();
                 BeanUtils.copyProperties(restricaoEncontrada, restricao, "folha");
                 restricao.setFolha(folhaObjectID);

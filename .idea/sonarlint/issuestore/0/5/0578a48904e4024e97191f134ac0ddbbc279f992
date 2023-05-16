@@ -1,9 +1,11 @@
 
 P
-java:S1948@".Make "gratidaoList" transient or serializable.(©ÚñÜÿÿÿÿÿ8‡‹™à1
+java:S1948C".Make "gratidaoList" transient or serializable.(©ÚñÜÿÿÿÿÿ8ÇÙ§€‚1
 T
-java:S1948D"2Make "aprendizagemList" transient or serializable.(øº…–ÿÿÿÿÿ8ˆ‹™à1
+java:S1948G"2Make "aprendizagemList" transient or serializable.(øº…–ÿÿÿÿÿ8ÇÙ§€‚1
+j
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.annotation.JsonFormat'.(ıÙè‹øÿÿÿÿ8´Æü‚1
 e
-java:S1128"HRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnore'.(ş‘‹„8Œ‹™à1
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnore'.(ş‘‹„8Äîè‚1
 I
-java:S1128",Remove this unused import 'lombok.ToString'.(¹ÂÄÓ8Œ‹™à1
+java:S1128	",Remove this unused import 'lombok.ToString'.(¹ÂÄÓ8Äîè‚1

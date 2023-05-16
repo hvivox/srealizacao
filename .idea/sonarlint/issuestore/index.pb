@@ -40,6 +40,8 @@ y
 Isrc/main/java/com/hvivox/srealizacao/controller/PrioridadeController.java,a\1\a1e6f3623da0647a1c5b3551956240648ec6269b
 e
 5src/main/java/com/hvivox/srealizacao/model/Folha.java,0\5\0578a48904e4024e97191f134ac0ddbbc279f992
+f
+6src/main/java/com/hvivox/srealizacao/dto/FolhaDto.java,6\7\672c1a805e8123ecec077197260d7da183046bb6
 t
 Dsrc/main/java/com/hvivox/srealizacao/controller/FolhaController.java,a\1\a1658aba859c744ecc199cce9637f19ba592eef1
 n

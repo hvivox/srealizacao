@@ -42,5 +42,7 @@ e
 5src/main/java/com/hvivox/srealizacao/model/Folha.java,0\5\0578a48904e4024e97191f134ac0ddbbc279f992
 n
 >src/main/java/com/hvivox/srealizacao/service/FolhaService.java,9\7\97077a34f411ab3b05a843e237d2536904c554ac
+f
+6src/main/java/com/hvivox/srealizacao/dto/FolhaDto.java,6\7\672c1a805e8123ecec077197260d7da183046bb6
 t
 Dsrc/main/java/com/hvivox/srealizacao/controller/FolhaController.java,a\1\a1658aba859c744ecc199cce9637f19ba592eef1

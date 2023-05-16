@@ -1,6 +1,7 @@
 package com.hvivox.srealizacao.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -9,8 +10,7 @@ import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,7 +33,10 @@ public class Folha implements Serializable {
     @NotNull
     @Column(name = "FOCO", nullable = false, length = 100)
     private String foco;
-
+    
+    
+    @Min(0)
+    @Max(10)
     @Column(name = "NOTADIA")
     private Integer notadia;
 
