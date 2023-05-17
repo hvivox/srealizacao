@@ -4,6 +4,10 @@
 # Log file
 *.log
 
+# sonarlint
+/.idea/sonarlint/
+.idea/sonarlint/
+
 # BlueJ files
 *.ctxt
 

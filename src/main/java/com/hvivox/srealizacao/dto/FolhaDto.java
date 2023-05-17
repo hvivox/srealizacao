@@ -23,8 +23,10 @@ public class FolhaDto implements Serializable {
     @Size(max = 100)
     @NotNull
     private String foco;
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-  
+    
+    @NotNull
+    @Min(0)
+    @Max(10)
     @Pattern(regexp = "^\\d+$", message = "O campo notadia deve ser um número inteiro")
     @Digits(integer = 10, fraction = 0, message = "O campo notadia deve ser um número inteiro")
     private  String notadia;

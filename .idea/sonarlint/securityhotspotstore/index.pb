@@ -3,9 +3,6 @@ l
 <src/main/java/com/hvivox/srealizacao/model/Aprendizagem.java,2\2\225be7be5c2c858ce8ac0c7f22148572ec4a1df8
 i
 9src/main/java/com/hvivox/srealizacao/model/Restricao.java,0\1\01be7dd1e8658c5b42b6bc28a0d6de20db0e1c3b
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 ~
 Nsrc/main/java/com/hvivox/srealizacao/specifications/SpecificationTemplate.java,0\6\060a6c45f814801bb5be15684021d1bc01bb1907
 7
@@ -38,11 +35,3 @@ y
 Isrc/main/java/com/hvivox/srealizacao/controller/PrioridadeController.java,a\1\a1e6f3623da0647a1c5b3551956240648ec6269b
 r
 Bsrc/main/java/com/hvivox/srealizacao/service/RestricaoService.java,6\5\65762956d44db3a6da90d2e28d276e6fed29fac7
-e
-5src/main/java/com/hvivox/srealizacao/model/Folha.java,0\5\0578a48904e4024e97191f134ac0ddbbc279f992
-n
->src/main/java/com/hvivox/srealizacao/service/FolhaService.java,9\7\97077a34f411ab3b05a843e237d2536904c554ac
-f
-6src/main/java/com/hvivox/srealizacao/dto/FolhaDto.java,6\7\672c1a805e8123ecec077197260d7da183046bb6
-t
-Dsrc/main/java/com/hvivox/srealizacao/controller/FolhaController.java,a\1\a1658aba859c744ecc199cce9637f19ba592eef1
