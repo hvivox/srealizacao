@@ -1,13 +1,18 @@
 package com.hvivox.srealizacao.service;
 
 
+import com.hvivox.srealizacao.dto.FolhaDto;
+import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
 import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
+import com.hvivox.srealizacao.exception.FolhaNaoEncontradoException;
 import com.hvivox.srealizacao.model.*;
 import com.hvivox.srealizacao.repository.FolhaRepository;
 import lombok.extern.log4j.Log4j2;
 import net.kaczmarzyk.spring.data.jpa.domain.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,6 +29,13 @@ import java.util.List;
 @Log4j2
 @Service
 public class FolhaService {
+    
+    private static final String MSG_FOLHA_EM_USO
+            = "Folha de código %d não pode ser removida, pois está em uso";
+    
+    private static final String MSG_FOLHA_NAO_ENCONTRADA
+            = "Folha existe um cadastro de código %d";
+
     @Autowired
     FolhaRepository folhaRepository;
     
@@ -39,14 +51,15 @@ public class FolhaService {
     @Autowired
     private AprendizagemService aprendizagemService;
     
+    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Entidade não encontrada";
     
     public Page<Folha> findAll(Specification<Folha> spec, Pageable pageable) {
         return folhaRepository.findAll(spec, pageable);
     }
     
     
-    public Folha findById(Integer idFolha) {
-        return folhaRepository.findById(idFolha).orElseThrow(() -> new EntidadeNaoEncontradaException("Entidade não encontrada"));
+    public Folha buscarOuFalhar(Integer idFolha) {
+        return folhaRepository.findById(idFolha).orElseThrow(() -> new FolhaNaoEncontradoException(MSG_ENTIDADE_NAO_ENCONTRADA));
         
     }
     
@@ -97,14 +110,19 @@ public class FolhaService {
     }
     
     @Transactional
-    public Folha update(Folha folhaEncontrada, Folha folhaInput) {
+    public Folha update(FolhaDto folhaInputDto, Integer idFolha) {
+    
+        Folha folhaInput = new Folha();
+        BeanUtils.copyProperties(folhaInputDto, folhaInput);
+        
+        Folha folhaEncontrada = buscarOuFalhar(idFolha);
         //folhaEncontrada.setId(folhaEncontrada.getId());
         folhaEncontrada.setFoco(folhaInput.getFoco());
         folhaEncontrada.setDtarealizacao(folhaInput.getDtarealizacao());
         folhaEncontrada.setNotadia(folhaInput.getNotadia());
         folhaEncontrada.setObservacao(folhaInput.getObservacao());
         folhaEncontrada.setStatus(folhaInput.getStatus());
-    
+        
         Folha folhaObjectID = new Folha();
         folhaObjectID.setId(folhaEncontrada.getId());
     
@@ -114,9 +132,9 @@ public class FolhaService {
             for (Prioridade prioridadeEncontrada : folhaInput.getPrioridadeList()) {
                 Prioridade prioridade = new Prioridade();
                 BeanUtils.copyProperties(prioridadeEncontrada, prioridade, "folha");
-                //prioridade.setFolha(folhaObjectID);
+                
                 prioridade.setFolha(folhaObjectID);
-                // log.debug("atributo prioridade {}", prioridade);
+                 log.debug("atributo prioridade {}", prioridade);
                 folhaEncontrada.getPrioridadeList().add(prioridade);
             }
     
@@ -168,7 +186,20 @@ public class FolhaService {
     
     @Transactional
     public void delete(Folha folha) {
-        folhaRepository.delete(folha);
+        try {
+            folhaRepository.delete(folha);
+        
+        } catch (EmptyResultDataAccessException e) {
+            throw new FolhaNaoEncontradoException(
+                    String.format(MSG_FOLHA_NAO_ENCONTRADA, folha.getId() ));
+        
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(
+                    String.format(MSG_FOLHA_EM_USO, folha.getId() ));
+        }
+        
+        
+        
     }
     
     

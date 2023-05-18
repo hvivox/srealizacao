@@ -7,6 +7,7 @@ import com.hvivox.srealizacao.model.Prioridade;
 import com.hvivox.srealizacao.model.Restricao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -18,8 +19,10 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class FolhaDto implements Serializable {
-    public FolhaDto(){}
+    private static final long serialVersionUID = 1L;
+    
     @Size(max = 100)
     @NotNull
     private String foco;

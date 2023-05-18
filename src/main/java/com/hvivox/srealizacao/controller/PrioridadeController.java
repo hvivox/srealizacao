@@ -38,6 +38,7 @@ public class PrioridadeController {
     }
 
    /* @DeleteMapping("{folhaId}")
+   @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deletarTodasPrioridades(@PathVariable(value = "folhaId") Integer folhaid ){
       //  log.debug("DELETE deletar todas as prioridades com ID {} ", courseId);
         Optional<Folha> folhaOptional = folhaService.findById(folhaid);
