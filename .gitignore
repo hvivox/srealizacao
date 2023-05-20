@@ -1,6 +1,6 @@
 # propriedades de configuração
-application.dev
-application.prod
+application-dev.properties
+application-prod.properties
 
 # sonarlint
 /.idea/sonarlint/
