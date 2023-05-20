@@ -1,6 +1,7 @@
 package com.hvivox.srealizacao.exception.handler;
 
 
+import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
 import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
 import com.hvivox.srealizacao.exception.NegocioException;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class ApiExceptionHandler {
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	public ResponseEntity<?> tratarEntidadeNaoEncontradaException(
+	public ResponseEntity<Object> tratarEntidadeNaoEncontradaException(
 			EntidadeNaoEncontradaException e) {
 		Problema problema = Problema.builder()
 				.dataHora(LocalDateTime.now())
@@ -24,6 +25,18 @@ public class ApiExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(problema);
 	}
+	
+	@ExceptionHandler(EntidadeEmUsoException.class)
+	public ResponseEntity<Object> tratarEntidadeEmUsoException(
+			EntidadeEmUsoException e) {
+		Problema problema = Problema.builder()
+				.dataHora(LocalDateTime.now())
+				.mensagem(e.getMessage()).build();
+		
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(problema);
+	}
+	
 	
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<Object> tratarNegocioException(NegocioException e) {
