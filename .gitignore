@@ -1,12 +1,17 @@
+# propriedades de configuração
+application.dev
+application.prod
+
+# sonarlint
+/.idea/sonarlint/
+.idea/sonarlint/
+
 # Compiled class file
 *.class
 
 # Log file
 *.log
 
-# sonarlint
-/.idea/sonarlint/
-.idea/sonarlint/
 
 # BlueJ files
 *.ctxt
