@@ -13,11 +13,7 @@ Este projeto surgiu a partir do curso Academia da Produtividade, que usa como fe
 folha da produtividade, segue
 o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-content/uploads/2015/11/FolhadeProdutividadeA.pdf)
 
-## Descrição
-
-Este repositório trata de uma aplicação de controle de realização de tarefas desenvolvida
-em Java com o framework Spring. A aplicação permite aos usuários gerenciar suas tarefas e acompanhar o progresso de sua
-realização.
+** Sistema desenvolvido em Java com o framework Spring.
 
 ## Recursos
 
