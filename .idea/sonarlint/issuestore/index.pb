@@ -15,8 +15,6 @@ y
 Isrc/main/java/com/hvivox/srealizacao/repository/PrioridadeRepository.java,c\6\c6f6988b31c12af654cf3f6f989cbc647652204f
 x
 Hsrc/main/java/com/hvivox/srealizacao/repository/RestricaoRepository.java,f\1\f1272e76607a5bc76ad85f683cf97b2d33a62428
-p
-@src/main/java/com/hvivox/srealizacao/configs/ResolverConfig.java,f\9\f969a64634868170c420a12149abf7396b78b330
 t
 Dsrc/main/java/com/hvivox/srealizacao/repository/FolhaRepository.java,7\6\7624f7ec33706a79fc14e0ff8150fe6fdee0450b
 j
@@ -33,8 +31,20 @@ t
 Dsrc/main/java/com/hvivox/srealizacao/exception/handler/Problema.java,3\1\318230a776f51bb89867aff7889217fe4d42190a
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+q
+Asrc/main/java/com/hvivox/srealizacao/service/GratidaoService.java,4\8\483ddae6d1c57f324e42e106bdbda6e602b763fa
+r
+Bsrc/main/java/com/hvivox/srealizacao/service/RestricaoService.java,6\5\65762956d44db3a6da90d2e28d276e6fed29fac7
+u
+Esrc/main/java/com/hvivox/srealizacao/service/AprendizagemService.java,b\b\bbeca2d2b1dfa70b83cfba4019b1d7216d9c418d
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+p
+@src/main/java/com/hvivox/srealizacao/configs/ResolverConfig.java,f\9\f969a64634868170c420a12149abf7396b78b330
+s
+Csrc/main/java/com/hvivox/srealizacao/service/PrioridadeService.java,b\0\b08823db04576955dfdecf4c399a4ee1967c71f7
+n
+>src/main/java/com/hvivox/srealizacao/service/FolhaService.java,9\7\97077a34f411ab3b05a843e237d2536904c554ac
