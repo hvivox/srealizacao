@@ -34,8 +34,10 @@ public class FolhaService {
             = "Folha de código %d não pode ser removida, pois está em uso";
     
     private static final String MSG_FOLHA_NAO_ENCONTRADA
-            = "Folha existe um cadastro de código %d";
-
+            = "Não existe folha com cadastro de código %d";
+    
+    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Entidade não encontrada";
+    
     @Autowired
     FolhaRepository folhaRepository;
     
@@ -51,7 +53,7 @@ public class FolhaService {
     @Autowired
     private AprendizagemService aprendizagemService;
     
-    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Entidade não encontrada";
+
     
     public Page<Folha> findAll(Specification<Folha> spec, Pageable pageable) {
         return folhaRepository.findAll(spec, pageable);
@@ -185,17 +187,16 @@ public class FolhaService {
 
     
     @Transactional
-    public void delete(Folha folha) {
-        try {
-            folhaRepository.delete(folha);
+    public void delete(Integer idFolha) {
         
+        try {
+            folhaRepository.deleteById( idFolha );
         } catch (EmptyResultDataAccessException e) {
             throw new FolhaNaoEncontradoException(
-                    String.format(MSG_FOLHA_NAO_ENCONTRADA, folha.getId() ));
-        
+                    String.format(MSG_FOLHA_NAO_ENCONTRADA, idFolha ));
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                    String.format(MSG_FOLHA_EM_USO, folha.getId() ));
+                    String.format(MSG_FOLHA_EM_USO, idFolha ));
         }
         
         

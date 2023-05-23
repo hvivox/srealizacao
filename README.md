@@ -17,9 +17,10 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 
 ## Recursos
 
+- Listagem de tarefas com o uso de paginação e especification: 
+  - Os usuários podem visualizar todas as tarefas cadastradas, incluindo informações como título,
+      descrição, prazo e status de conclusão.
 - Cadastro de tarefas: Os usuários podem criar novas tarefas especificando o título, descrição, prazo e prioridade.
-- Listagem de tarefas: Os usuários podem visualizar todas as tarefas cadastradas, incluindo informações como título,
-  descrição, prazo e status de conclusão.
 - Atualização de tarefas: Os usuários podem atualizar o status de conclusão das tarefas, marcar como concluídas ou
   reabrir tarefas já concluídas.
 - Remoção de tarefas: Os usuários podem excluir tarefas que não são mais necessárias.
@@ -30,7 +31,7 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 - Spring Boot 2.5.0 ou superior
 - Banco de dados relacional. Lembrando que o mesmo foi desenvolvido no MSSQL, no entanto por usar Spring Data JPA pode 
 ser utilizado qualquer banco
-- 
+
 
 ## Configuração do Ambiente de Desenvolvimento
 

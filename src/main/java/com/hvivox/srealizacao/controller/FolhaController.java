@@ -45,7 +45,6 @@ public class FolhaController {
             10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         
         Page<Folha> folhaPage = folhaService.findAll(spec, pageable);
-        
         //ResponseEntity está sendo usado como exemplo para monstrar a forma de utilização
         return ResponseEntity.status(HttpStatus.OK).body(folhaPage);
     }
@@ -62,8 +61,12 @@ public class FolhaController {
     public Folha save(@RequestBody @Validated FolhaDto folhaDto) {
         Folha folha = new Folha();
         BeanUtils.copyProperties(folhaDto, folha);
-        
-        return folhaService.save(folha);
+
+        try {
+            return folhaService.save(folha);
+        } catch (FolhaNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
         
     }
     

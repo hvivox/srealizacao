@@ -1,5 +1,6 @@
 package com.hvivox.srealizacao.controller;
 
+import com.hvivox.srealizacao.model.Folha;
 import com.hvivox.srealizacao.model.Prioridade;
 import com.hvivox.srealizacao.service.FolhaService;
 import com.hvivox.srealizacao.service.PrioridadeService;
@@ -37,18 +38,15 @@ public class PrioridadeController {
 
     }
 
-   /* @DeleteMapping("{folhaId}")
+   @DeleteMapping("{folhaId}")
    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deletarTodasPrioridades(@PathVariable(value = "folhaId") Integer folhaid ){
-      //  log.debug("DELETE deletar todas as prioridades com ID {} ", courseId);
-        Optional<Folha> folhaOptional = folhaService.findById(folhaid);
-        if (!folhaOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
-        }
-
-        prioridadeService.deleteTodosDaFolha( folhaOptional.get().getId() );
-        //log.info("Prioridade deleteTodosDaFolha realizado com sucesso IDFolha {} ", courseId);
+        //log.debug("DELETE deletar todas as prioridades com ID {} ", courseId);
+        Folha folhaEncontrada = folhaService.buscarOuFalhar(folhaid);
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
+        prioridadeService.deleteTodosDaFolha( folhaEncontrada.getId() );
+        
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully.");
-    }*/
+    }
 
 }
