@@ -1,6 +1,5 @@
 package com.hvivox.srealizacao.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hvivox.srealizacao.model.Aprendizagem;
 import com.hvivox.srealizacao.model.Gratidao;
 import com.hvivox.srealizacao.model.Prioridade;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,12 +32,17 @@ public class FolhaDto implements Serializable {
     @Pattern(regexp = "^\\d+$", message = "O campo notadia deve ser um número inteiro")
     @Digits(integer = 10, fraction = 0, message = "O campo notadia deve ser um número inteiro")
     private  String notadia;
+   
+    //@JsonFormat(pattern="dd/MM/yyyy")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
     @NotNull
-    private LocalDate dtarealizacao;
+    private LocalDateTime dtarealizacao;
     @Size(max = 500)
     private  String observacao;
     @NotNull
     private  Boolean status;
+    
+   
     private  List<Prioridade> prioridadeList;
     private  List<Restricao> restricaoList;
     private  List<Gratidao> gratidaoList;

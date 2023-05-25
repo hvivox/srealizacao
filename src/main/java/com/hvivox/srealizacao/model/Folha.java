@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,8 @@ public class Folha implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDFOLHA", nullable = false)
     private Integer id;
-    
-    @Size(max = 100)
-    @NotNull
+   
+   
     @Column(name = "FOCO", nullable = false, length = 100)
     private String foco;
     
@@ -40,16 +40,17 @@ public class Folha implements Serializable {
     @Column(name = "NOTADIA")
     private Integer notadia;
     
-    @NotNull
-    @UpdateTimestamp
-    @Column(name = "DTAREALIZACAO", nullable = false)
-    private LocalDate dtarealizacao;
     
-    @Size(max = 500)
+   //@UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @Column(name = "DTAREALIZACAO", nullable = false)
+    private LocalDateTime dtarealizacao;
+    
+    
     @Column(name = "OBSERVACAO", length = 500)
     private String observacao;
     
-    @NotNull
+
     @Column(name = "STATUS", nullable = false)
     private Boolean status = false;
     

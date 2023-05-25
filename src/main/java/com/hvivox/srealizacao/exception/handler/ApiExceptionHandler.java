@@ -9,11 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class ApiExceptionHandler {
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<Object> tratarEntidadeNaoEncontradaException(
@@ -48,7 +49,9 @@ public class ApiExceptionHandler {
 				.body(problema);
 	}
 	
-	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+	
+	
+	/*@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<Object> tratarHttpMediaTypeNotSupportedException() {
 		Problema problema = Problema.builder()
 				.dataHora(LocalDateTime.now())
@@ -57,5 +60,5 @@ public class ApiExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
 				.body(problema);
 	}
-	
+	*/
 }
