@@ -1,7 +1,6 @@
 package com.hvivox.srealizacao.service;
 
-import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
-import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
+import com.hvivox.srealizacao.exception.*;
 import com.hvivox.srealizacao.model.Prioridade;
 import com.hvivox.srealizacao.repository.PrioridadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,12 @@ public class PrioridadeService {
     
     @Transactional
     public Prioridade save(Prioridade prioridade) {
-        return prioridadeRepository.save(prioridade);
+    
+        try {
+            return prioridadeRepository.save(prioridade);
+        } catch (PrioridadeNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
         
     }
     

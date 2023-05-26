@@ -2,6 +2,7 @@ package com.hvivox.srealizacao.service;
 
 import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
 import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
+import com.hvivox.srealizacao.exception.FolhaNaoEncontradoException;
 import com.hvivox.srealizacao.model.Aprendizagem;
 import com.hvivox.srealizacao.repository.AprendizagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;

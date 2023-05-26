@@ -8,8 +8,8 @@ public class GratidaoNaoEncontradoException extends EntidadeNaoEncontradaExcepti
 		super(mensagem);
 	}
 	
-	public GratidaoNaoEncontradoException(Long estadoId) {
-		this(String.format("Não existe um cadastro de estado com código %d", estadoId));
+	public GratidaoNaoEncontradoException(Long gratidaoId) {
+		this(String.format("Não existe um cadastro de gratidão com código %d", gratidaoId));
 	}
 	
 }

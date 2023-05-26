@@ -8,8 +8,8 @@ public class RestricaoNaoEncontradoException extends EntidadeNaoEncontradaExcept
 		super(mensagem);
 	}
 	
-	public RestricaoNaoEncontradoException(Long estadoId) {
-		this(String.format("Não existe um cadastro de estado com código %d", estadoId));
+	public RestricaoNaoEncontradoException(Long restricaoId) {
+		this(String.format("Não existe um cadastro de restrição com código %d", restricaoId));
 	}
 	
 }

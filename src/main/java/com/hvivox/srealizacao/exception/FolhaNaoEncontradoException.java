@@ -8,8 +8,8 @@ public class FolhaNaoEncontradoException extends EntidadeNaoEncontradaException 
 		super(mensagem);
 	}
 	
-	public FolhaNaoEncontradoException(Long estadoId) {
-		this(String.format("Não existe um cadastro de estado com código %d", estadoId));
+	public FolhaNaoEncontradoException(Integer folhaId) {
+		this(String.format("Não existe um cadastro de folha com código %d", folhaId));
 	}
 	
 }

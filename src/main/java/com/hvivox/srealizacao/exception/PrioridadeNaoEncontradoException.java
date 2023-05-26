@@ -8,8 +8,8 @@ public class PrioridadeNaoEncontradoException extends EntidadeNaoEncontradaExcep
 		super(mensagem);
 	}
 	
-	public PrioridadeNaoEncontradoException(Long estadoId) {
-		this(String.format("Não existe um cadastro de estado com código %d", estadoId));
+	public PrioridadeNaoEncontradoException(Long prioridadeId) {
+		this(String.format("Não existe um cadastro de prioridade com código %d", prioridadeId));
 	}
 	
 }

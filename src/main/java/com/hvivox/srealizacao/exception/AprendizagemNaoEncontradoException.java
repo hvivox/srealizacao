@@ -8,8 +8,8 @@ public class AprendizagemNaoEncontradoException extends EntidadeNaoEncontradaExc
 		super(mensagem);
 	}
 	
-	public AprendizagemNaoEncontradoException(Long estadoId) {
-		this(String.format("Não existe um cadastro de estado com código %d", estadoId));
+	public AprendizagemNaoEncontradoException(Long AprendizagemId) {
+		this(String.format("Não existe um cadastro de aprendizagem com código %d", AprendizagemId));
 	}
 	
 }

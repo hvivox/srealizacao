@@ -62,7 +62,7 @@ public class FolhaService {
     
     public Folha buscarOuFalhar(Integer idFolha) {
         return folhaRepository.findById(idFolha)
-                .orElseThrow(() -> new FolhaNaoEncontradoException(MSG_ENTIDADE_NAO_ENCONTRADA));
+                .orElseThrow(() -> new FolhaNaoEncontradoException(idFolha));
     }
     
     
