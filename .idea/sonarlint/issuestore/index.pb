@@ -33,9 +33,6 @@ r
 Bsrc/main/java/com/hvivox/srealizacao/service/RestricaoService.java,6\5\65762956d44db3a6da90d2e28d276e6fed29fac7
 u
 Esrc/main/java/com/hvivox/srealizacao/service/AprendizagemService.java,b\b\bbeca2d2b1dfa70b83cfba4019b1d7216d9c418d
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 s
 Csrc/main/java/com/hvivox/srealizacao/service/PrioridadeService.java,b\0\b08823db04576955dfdecf4c399a4ee1967c71f7
 n
