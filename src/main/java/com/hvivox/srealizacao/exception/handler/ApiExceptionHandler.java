@@ -1,5 +1,10 @@
 package com.hvivox.srealizacao.exception.handler;
 
+import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
+import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
+import com.hvivox.srealizacao.exception.NegocioException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,23 +13,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
-import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algaworks.algafood.domain.exception.NegocioException;
-
+@Log4j2
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-
+	
+	
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<?> handleEntidadeNaoEncontradaException(
 			EntidadeNaoEncontradaException ex, WebRequest request) {
-		
+			
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
 		String detail = ex.getMessage();
 		
+		//String detail = ex.getCause().getMessage();
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
 		
+		log.trace("Log detalhado: ", ex);
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
@@ -38,6 +43,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
 		
+		log.trace("Log detalhado: ", ex);
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
@@ -50,6 +56,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
 		
+		log.trace("Log detalhado: ", ex);
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
@@ -69,6 +76,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		}
 		
+		//log.trace("Log detalhado: ", ex);
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
 	
