@@ -18,7 +18,8 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 ![]([https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png)?text=srealizacao#vitrinedev)
-![](https://via.placeholder.com/1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
+
+![](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
 <!-- ############################################################################## --> 
 
 ## Detalhes do projeto
