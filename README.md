@@ -14,12 +14,10 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 | :sparkles: Nome        | **Srealizacao**
 | :label: Tecnologias | java, springboot, spring-mvc, spring-data-jpa, pagination, specification, dto, exceptionHandler, hateoas e muito mais
 | :rocket: URL         | https://localhost
-| :fire: Desafio     | 
+| :fire: Desafio     | https://localhost
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![]([https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png)?text=srealizacao#vitrinedev)
-
-![](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
+![](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png?text=srealizacao#vitrinedev)
 <!-- ############################################################################## --> 
 
 ## Detalhes do projeto
