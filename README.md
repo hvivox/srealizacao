@@ -17,8 +17,10 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 | :fire: Desafio     | 
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![](https://via.placeholder.com/1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
-##############################################################################
+![]([https://via.placeholder.com/1200x500.png](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png)?text=projeto+srealizacao#vitrinedev)
+
+<!-- ############################################################################## --> 
+
 ## Detalhes do projeto
 
 <p align="center">
@@ -26,17 +28,6 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 <img width="200" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" />
 </a>
 </p>
-
-# srealizacao
-
-Srealização é um sistema para auxiliar na produtividade das atividades de produção diária,
-visando manter o clareza, foco, motivação para evitar as distrações que nos distanciam dos objetivos
-
-Este projeto surgiu a partir do curso Academia da Produtividade, que usa como ferramenta a
-folha da produtividade, segue
-o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-content/uploads/2015/11/FolhadeProdutividadeA.pdf)
-
-** Sistema desenvolvido em Java com o framework Spring.
 
 ## Recursos
 
