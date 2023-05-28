@@ -1,6 +1,6 @@
 # srealizacao
 
-Srealização é um sistema para auxiliar na produtividade das atividades de produção diária,
+Srealização é uma  API para auxiliar na produtividade das atividades de produção diária,
 visando manter o clareza, foco, motivação para evitar as distrações que nos distanciam dos objetivos
 
 Este projeto surgiu a partir do curso Academia da Produtividade, que usa como ferramenta a
