@@ -1,5 +1,4 @@
-# srealizacao
-<h1 align="left">API SREALIZACAO - PRODUTIVIDADE</h1>
+<h1 align="left">SREALIZACAO - PRODUTIVIDADE</h1>
 
 Srealização é uma  API para auxiliar na produtividade das atividades de produção diária,
 visando manter o clareza, foco, motivação para evitar as distrações que nos distanciam dos objetivos
