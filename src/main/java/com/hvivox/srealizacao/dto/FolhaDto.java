@@ -29,9 +29,8 @@ public class FolhaDto implements Serializable {
     @NotNull
     @Min(0)
     @Max(10)
-    @Pattern(regexp = "^\\d+$", message = "O campo notadia deve ser um número inteiro")
-    @Digits(integer = 10, fraction = 0, message = "O campo notadia deve ser um número inteiro")
-    private  String notadia;
+    /*@Pattern(regexp = "^\\d+$", message = "O campo notadia deve ser um número inteiro")*/
+    private  Integer notadia;
    
     //@JsonFormat(pattern="dd/MM/yyyy")
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")

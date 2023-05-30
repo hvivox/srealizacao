@@ -1,5 +1,7 @@
 package com.hvivox.srealizacao.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hvivox.srealizacao.dto.FolhaDto;
 import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
 import com.hvivox.srealizacao.exception.FolhaNaoEncontradoException;
@@ -74,6 +76,9 @@ public class FolhaController {
     @PutMapping("/{idFolha}")
     public ResponseEntity<Object> update(@PathVariable Integer idFolha, @Valid @RequestBody FolhaDto folhaInputDto) {
         // log.debug("PUT Update dados {} e idFolha:{} ", folha.toString(), idFolha);
+       /* ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);*/
         
         try {
             Folha folhaAtualizada = folhaService.update(folhaInputDto, idFolha);
