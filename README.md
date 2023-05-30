@@ -1,12 +1,6 @@
-<p align="center">
-<a href="https://laravel.com" target="_blank">
-<img width="200" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" />
-</a>
-</p>
+<h1 align="left">SREALIZACAO - PRODUTIVIDADE</h1>
 
-# srealizacao
-
-Srealização é um sistema para auxiliar na produtividade das atividades de produção diária,
+Srealização é uma  API para auxiliar na produtividade das atividades de produção diária,
 visando manter o clareza, foco, motivação para evitar as distrações que nos distanciam dos objetivos
 
 Este projeto surgiu a partir do curso Academia da Produtividade, que usa como ferramenta a
@@ -14,6 +8,20 @@ folha da produtividade, segue
 o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-content/uploads/2015/11/FolhadeProdutividadeA.pdf)
 
 ** Sistema desenvolvido em Java com o framework Spring.
+
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **Srealizacao**
+| :label: Tecnologias | java, springboot, spring-mvc, spring-data-jpa, pagination, specification, dto, exceptionHandler, hateoas e muito mais
+| :rocket: URL         | https://localhost
+| :fire: Desafio     | https://localhost
+
+<!-- Inserir imagem com a #vitrinedev ao final do link -->
+![](https://jobsx.com.br/wp-content/uploads/2021/01/Capas-Blog-Janeiro-Jobs-X_Prancheta-1-1200x500.png?text=srealizacao#vitrinedev)
+
+<!-- ############################################################################## --> 
+
+# Detalhes do projeto
 
 ## Recursos
 
