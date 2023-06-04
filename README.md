@@ -11,7 +11,7 @@ o [link de acesso disponibilizado pelo autor](https://produtividadea.com.br/wp-c
 
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
-| :sparkles: Nome        | **Srealizacao-back**
+| :sparkles: Nome        | **Srealizacao-back - sistema de produtividade**
 | :label: Tecnologias | java, springboot, spring-mvc, spring-data-jpa, pagination, specification, dto, exceptionHandler, hateoas e muito mais
 | :rocket: URL         | https://localhost
 | :fire: Base Projeto     | (https://produtividadea.com.br/wp-content/uploads/2015/11/FolhadeProdutividadeA.pdf)
