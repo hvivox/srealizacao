@@ -21,8 +21,6 @@ y
 Isrc/main/java/com/hvivox/srealizacao/controller/PrioridadeController.java,a\1\a1e6f3623da0647a1c5b3551956240648ec6269b
 p
 @src/main/java/com/hvivox/srealizacao/SrealizacaoApplication.java,d\f\df7fdbefb6e7039fe61db1b9c8fed74e2f3b569c
-~
-Nsrc/main/java/com/hvivox/srealizacao/specifications/SpecificationTemplate.java,0\6\060a6c45f814801bb5be15684021d1bc01bb1907
 †
 Vsrc/main/java/com/hvivox/srealizacao/exception/AprendizagemNaoEncontradoException.java,b\3\b3c8d31a2f014be5cb4cdc017442eddc46cab2ca
 ƒ
@@ -38,7 +36,23 @@ Esrc/main/java/com/hvivox/srealizacao/service/AprendizagemService.java,b\b\bbec
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-n
->src/main/java/com/hvivox/srealizacao/service/FolhaService.java,9\7\97077a34f411ab3b05a843e237d2536904c554ac
 s
 Csrc/main/java/com/hvivox/srealizacao/service/PrioridadeService.java,b\0\b08823db04576955dfdecf4c399a4ee1967c71f7
+h
+8src/main/java/com/hvivox/srealizacao/model/Gratidao.java,4\9\49af2b3ec52e0e572a5dff9b1065b40428cd8868
+j
+:src/main/java/com/hvivox/srealizacao/model/Prioridade.java,3\3\3348f8b5b5c12f07384309e469ee71954596b151
+
+Osrc/main/java/com/hvivox/srealizacao/exception/handler/ApiExceptionHandler.java,e\4\e4ac2a78fafaa7264f87e9a6619798bc9a55fb15
+e
+5src/main/java/com/hvivox/srealizacao/model/Folha.java,0\5\0578a48904e4024e97191f134ac0ddbbc279f992
+u
+Esrc/main/java/com/hvivox/srealizacao/configs/EntradaDadosJackson.java,7\0\7096065f396b224ac18c7d27de5d2a53efe54fcf
+s
+Csrc/main/java/com/hvivox/srealizacao/exception/handler/Problem.java,6\5\659d63225df19a449245c7959516694a95cb28ed
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+y
+Isrc/main/java/com/hvivox/srealizacao/core/security/WebSecurityConfig.java,7\e\7e39ab746d83f1dabef4f8b2d8612fd192d535e9
+n
+>src/main/java/com/hvivox/srealizacao/service/FolhaService.java,9\7\97077a34f411ab3b05a843e237d2536904c554ac
