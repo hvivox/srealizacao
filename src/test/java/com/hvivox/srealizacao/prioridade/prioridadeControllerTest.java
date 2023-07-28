@@ -1,4 +1,4 @@
-package com.hvivox.srealizacao.folha;
+package com.hvivox.srealizacao.prioridade;
 
 import com.hvivox.srealizacao.model.Prioridade;
 import com.hvivox.srealizacao.service.PrioridadeService;
