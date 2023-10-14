@@ -1,0 +1,17 @@
+
+I
+java:S1948F".Make "gratidaoList" transient or serializable.(©ÚñÜÿÿÿÿÿ
+M
+java:S1948K"2Make "aprendizagemList" transient or serializable.(øº…–ÿÿÿÿÿ
+a
+java:S1128"FRemove this unused import 'org.hibernate.annotations.UpdateTimestamp'.(Ñµ¬Ûúÿÿÿÿ
+S
+java:S1128"=Remove this unused import 'javax.validation.constraints.Max'.(þÉ½¦
+S
+java:S1128"=Remove this unused import 'javax.validation.constraints.Min'.(ã¤Ž½
+\
+java:S1128"ARemove this unused import 'javax.validation.constraints.NotNull'.(áç¥ãüÿÿÿÿ
+T
+java:S1128">Remove this unused import 'javax.validation.constraints.Size'.(›«´Ý
+K
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èýÿÿÿÿ

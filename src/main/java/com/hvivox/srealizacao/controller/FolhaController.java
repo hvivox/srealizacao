@@ -93,4 +93,16 @@ public class FolhaController {
         
     }
     
+    
+    @GetMapping("/excel")
+    public ResponseEntity<String> getAll() {
+        
+        folhaService.gerarExcelFolha();
+        //ResponseEntity está sendo usado como exemplo para monstrar a forma de utilização
+        //return ResponseEntity.status(HttpStatus.OK).body(folhaPage);
+        return ResponseEntity.status(HttpStatus.OK).body("relat gerado");
+    }
+    
+    
+    
 }

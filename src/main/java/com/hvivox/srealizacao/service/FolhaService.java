@@ -3,12 +3,12 @@ package com.hvivox.srealizacao.service;
 
 import com.hvivox.srealizacao.dto.FolhaDto;
 import com.hvivox.srealizacao.exception.EntidadeEmUsoException;
-import com.hvivox.srealizacao.exception.EntidadeNaoEncontradaException;
 import com.hvivox.srealizacao.exception.FolhaNaoEncontradoException;
 import com.hvivox.srealizacao.model.*;
 import com.hvivox.srealizacao.repository.FolhaRepository;
 import lombok.extern.log4j.Log4j2;
-import net.kaczmarzyk.spring.data.jpa.domain.In;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,11 +19,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
-
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Log4j2
@@ -198,10 +203,81 @@ public class FolhaService {
             throw new EntidadeEmUsoException(
                     String.format(MSG_FOLHA_EM_USO, idFolha ));
         }
-        
-        
-        
     }
     
+    
+    public void gerarExcelFolha() {
+        log.info("Iniciando a criação da planilha");
+        Workbook workbook = new HSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Relatório de Vendas");
+        
+        List<Folha> folhaEntradaList = folhaRepository.findAll();
+        
+        log.info("Configurando o cabeçalho da planilha");
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID do Pedido");
+        headerRow.createCell(1).setCellValue("Lista de Itens");
+        headerRow.createCell(2).setCellValue("Nome do Consultor");
+        headerRow.createCell(3).setCellValue("Data da Compra");
+        headerRow.createCell(4).setCellValue("Valor Total");
+        
+        CreationHelper createHelper = workbook.getCreationHelper();
+        
+        //Estilo para quebrar linha
+        CellStyle wrappedStyle = workbook.createCellStyle();
+        wrappedStyle.setWrapText(true);
+        
+        // Estilo de data
+        CellStyle dateStyle = workbook.createCellStyle();
+        dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
+        
+        // Estilo de moeda
+        CellStyle currencyStyle = workbook.createCellStyle();
+        currencyStyle.setDataFormat(createHelper.createDataFormat().getFormat("R$#,##0.00"));
+        
+        log.info("Quantidade de linhas da planilha: {}", folhaEntradaList.size() );
+        int rowNum = 1;
+        for (Folha folha : folhaEntradaList) {
+            Row row = sheet.createRow(rowNum++);
+            
+            row.createCell(0).setCellValue(folha.getFoco());
+            
+            // sublista
+            List<Prioridade> prioridades = folha.getPrioridadeList();
+            String prioridadesStr = prioridades.stream()
+                    .map(Prioridade::getDescricao)
+                    .collect(Collectors.joining("\n"));
+            
+            row.createCell(1).setCellValue(prioridadesStr);
+            row.getCell(1).setCellStyle(wrappedStyle);
+            row.createCell(2).setCellValue(folha.getObservacao());
+            row.createCell(3).setCellValue(convertToDateViaInstant(folha.getDtarealizacao()));
+            row.getCell(3).setCellStyle(dateStyle);
+            row.createCell(4).setCellValue(folha.getNotadia());
+            row.getCell(4).setCellStyle(currencyStyle);
+        }
+        
+        log.info("Auto ajuste das colunas" );
+        for (int i = 0; i <= 4; i++) {
+            sheet.autoSizeColumn(i);
+        }
+        
+        
+        try  {
+            String file = "src/main/resources/relatorio_de_vendas.xls";
+            FileOutputStream fileOut = new FileOutputStream(file);
+            log.info("gravando o arquivo no caminho: {}", file );
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    private Date convertToDateViaInstant(LocalDateTime dateToConvert) {
+        return java.util.Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
+    }
     
 }

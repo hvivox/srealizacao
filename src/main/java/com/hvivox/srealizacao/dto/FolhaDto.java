@@ -36,8 +36,10 @@ public class FolhaDto implements Serializable {
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
     @NotNull
     private LocalDateTime dtarealizacao;
+    
     @Size(max = 500)
     private  String observacao;
+    
     @NotNull
     private  Boolean status;
     
