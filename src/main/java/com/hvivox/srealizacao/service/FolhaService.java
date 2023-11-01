@@ -19,16 +19,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Log4j2
@@ -206,7 +204,7 @@ public class FolhaService {
     }
     
     
-    public void gerarExcelFolha() {
+    public ByteArrayOutputStream gerarExcelFolha() {
         log.info("Iniciando a criação da planilha");
         Workbook workbook = new HSSFWorkbook();
         Sheet sheet = workbook.createSheet("Relatório de Vendas");
@@ -229,7 +227,7 @@ public class FolhaService {
         
         // Estilo de data
         CellStyle dateStyle = workbook.createCellStyle();
-        dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
+        dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
         
         // Estilo de moeda
         CellStyle currencyStyle = workbook.createCellStyle();
@@ -262,17 +260,23 @@ public class FolhaService {
             sheet.autoSizeColumn(i);
         }
         
-        
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try  {
-            String file = "src/main/resources/relatorio_de_vendas.xls";
+            
+            workbook.write(byteArrayOutputStream);
+            workbook.close();
+           
+        
+            /*String file = "src/main/resources/relatorio_de_vendas.xls";
             FileOutputStream fileOut = new FileOutputStream(file);
             log.info("gravando o arquivo no caminho: {}", file );
             workbook.write(fileOut);
             fileOut.close();
-            workbook.close();
+            workbook.close();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return byteArrayOutputStream;
     }
     
     

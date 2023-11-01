@@ -16,16 +16,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Log4j2
 @RestController
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("folhas")
 public class FolhaController {
     
@@ -63,7 +70,7 @@ public class FolhaController {
     public Folha save(@RequestBody @Validated FolhaDto folhaDto) {
         Folha folha = new Folha();
         BeanUtils.copyProperties(folhaDto, folha);
-
+        
         try {
             return folhaService.save(folha);
         } catch (FolhaNaoEncontradoException e) {
@@ -86,23 +93,32 @@ public class FolhaController {
         } catch (FolhaNaoEncontradoException e) {
             //retorna BAD_REQUEST | 400, a resposta na estrutura padrao do spring
             // Corrigi o problema da resposta ficar com o NOT_FOUND 404
-           // log.debug( "CAUSA DO PROBLEMA {}", e.getCause() );
+            // log.debug( "CAUSA DO PROBLEMA {}", e.getCause() );
             throw new NegocioException(e.getMessage(), e);
             
         }
-        
     }
     
     
-    @GetMapping("/excel")
-    public ResponseEntity<String> getAll() {
+    @GetMapping(path = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                                                  @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        try {
+            LocalDateTime startDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
         
-        folhaService.gerarExcelFolha();
-        //ResponseEntity está sendo usado como exemplo para monstrar a forma de utilização
-        //return ResponseEntity.status(HttpStatus.OK).body(folhaPage);
-        return ResponseEntity.status(HttpStatus.OK).body("relat gerado");
+            System.out.println("data inicio "+ startDateTime);
+            System.out.println("data fim "+ endDateTime);
+            
+            ByteArrayOutputStream baos = folhaService.gerarExcelFolha();
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; " +
+                    "filename=relatorio_de_vendas.xls").contentType(MediaType.APPLICATION_OCTET_STREAM).body(baos.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+      /*  folhaService.gerarExcelFolha();
+        return ResponseEntity.status(HttpStatus.OK).body("relat gerado");*/
     }
-    
-    
     
 }
