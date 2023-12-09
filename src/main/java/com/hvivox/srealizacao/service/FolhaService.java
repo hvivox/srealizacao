@@ -71,7 +71,7 @@ public class FolhaService {
     
     @Transactional
     public Folha save(Folha folha) {
-    
+
         log.debug("POST Salvar dados {} ", folha.toString());
         List<Prioridade> prioridades = new ArrayList<>();
         List<Restricao> restricoes = new ArrayList<>();
@@ -132,7 +132,7 @@ public class FolhaService {
         folhaObjectID.setId(folhaEncontrada.getId());
     
         prioridadeService.deleteTodosDaFolha(folhaEncontrada.getId());
-        if (!folhaInput.getPrioridadeList().isEmpty()) {
+        if (folhaInput.getPrioridadeList() != null && !folhaInput.getPrioridadeList().isEmpty()) {
             
             for (Prioridade prioridadeEncontrada : folhaInput.getPrioridadeList()) {
                 Prioridade prioridade = new Prioridade();
@@ -146,7 +146,7 @@ public class FolhaService {
         }
     
         restricaoService.deleteTodosDaFolha(folhaEncontrada.getId());
-        if (!folhaInput.getRestricaoList().isEmpty()) {
+        if ( folhaInput.getRestricaoList() != null && !folhaInput.getRestricaoList().isEmpty()) {
     
             for (Restricao restricaoEncontrada : folhaInput.getRestricaoList()) {
                 
@@ -160,7 +160,7 @@ public class FolhaService {
     
     
         gratidaoService.deleteTodosDaFolha(folhaEncontrada.getId());
-        if (!folhaInput.getGratidaoList().isEmpty()) {
+        if ( folhaInput.getGratidaoList() != null && !folhaInput.getGratidaoList().isEmpty()) {
             for (Gratidao gratidaoEncontrada : folhaInput.getGratidaoList()) {
                 Gratidao gratidao = new Gratidao();
                 BeanUtils.copyProperties(gratidaoEncontrada, gratidao, "folha");
@@ -172,7 +172,7 @@ public class FolhaService {
     
     
         aprendizagemService.deleteTodosDaFolha(folhaEncontrada.getId());
-        if (!folhaInput.getAprendizagemList().isEmpty()) {
+        if ( folhaInput.getAprendizagemList() != null && !folhaInput.getAprendizagemList().isEmpty()) {
             
             for (Aprendizagem aprendizagemEncontrada : folhaInput.getAprendizagemList()) {
                 Aprendizagem aprendizagem = new Aprendizagem();
@@ -284,4 +284,7 @@ public class FolhaService {
         return java.util.Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
     }
     
+    public void inativarFolha(Folha folhaEncontrada) {
+        folhaRepository.save(folhaEncontrada);
+    }
 }

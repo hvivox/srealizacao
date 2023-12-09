@@ -54,7 +54,7 @@ public class Folha implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private Boolean status = false;
     
-   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "folha", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
             CascadeType.MERGE}, orphanRemoval = true)
     private List<Prioridade> prioridadeList = new ArrayList<>();

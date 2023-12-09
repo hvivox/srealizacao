@@ -100,6 +100,27 @@ public class FolhaController {
     }
     
     
+    @PatchMapping("/{idFolha}")
+    public ResponseEntity<String> inativarFolha(@PathVariable Integer idFolha) {
+        try {
+            
+            Folha folhaEncontrada = folhaService.buscarOuFalhar(idFolha);
+            
+            if ((folhaEncontrada instanceof Folha) && folhaEncontrada.getStatus()) {
+                
+                folhaEncontrada.setStatus(false);
+                folhaService.inativarFolha(folhaEncontrada);
+                return ResponseEntity.status(HttpStatus.OK).body("Folha inativada com sucesso");
+            }
+            
+            return ResponseEntity.status(HttpStatus.OK).body("Inativo ou não encontrado");
+            
+        } catch (EntidadeNaoEncontradaException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    
+    
     @GetMapping(path = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                                   @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
