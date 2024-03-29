@@ -13,7 +13,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.editorconfig
+
 
 ### IntelliJ IDEA ###
 .idea
@@ -35,3 +35,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### SONARLINT ###
+.idea/sonarlint/
