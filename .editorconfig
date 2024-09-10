@@ -1,15 +1,22 @@
-# Configurações globais
+# Configuração para todos os arquivos
 root = true
 
 # Configuração para todos os arquivos
 [*]
-indent_style = space
-indent_size = 4
-end_of_line = lf
-charset = utf-8
 trim_trailing_whitespace = true
-insert_final_newline = true
+#charset = utf-8 ; Define a codificação de caracteres como UTF-8
+end_of_line = lf ; Define o tipo de final de linha como CRLF (usado em Windows)
+indent_size = 4 ; Define o tamanho da indentação como 4 espaços
+indent_style = space ; Usa espaços em vez de tabulações para indentação
+max_line_length = 120 ; Define o comprimento máximo da linha como 120 caracteres
+tab_width = 4 ; Define a largura da tabulação como 4 espaços
+ij_continuation_indent_size = 8 ; Define a indentação de continuação (para linhas quebradas) como 8 espaços
+ij_smart_tabs = false ; Desativa as tabulações inteligentes
+ij_wrap_on_typing = false ; Desativa a quebra de linha automática ao digitar
+
 
 # Configurações específicas para arquivos Java
 [*.java]
-indent_size = 4
+ij_visual_guides = 120 ; Define um guia visual na coluna 120
+ij_java_blank_lines_around_method = 2 ; Define duas linhas em branco ao redor de um método
+

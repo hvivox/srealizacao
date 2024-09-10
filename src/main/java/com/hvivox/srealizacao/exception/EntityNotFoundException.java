@@ -3,13 +3,13 @@ package com.hvivox.srealizacao.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class EntidadeEmUsoException extends NegocioException {
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public abstract class EntityNotFoundException extends BusinessException {
 
 	private static final long serialVersionUID = 1L;
 
-	public EntidadeEmUsoException(String mensagem) {
+	public EntityNotFoundException(String mensagem) {
 		super(mensagem);
 	}
-	
+
 }

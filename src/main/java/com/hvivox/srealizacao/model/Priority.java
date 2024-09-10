@@ -17,7 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "PRIORIDADE", indexes = { @Index(name = "indx_id", columnList = "IDPRIORIDADE") })
-public class Prioridade implements Serializable {
+public class Priority implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @EqualsAndHashCode.Include
@@ -28,21 +28,21 @@ public class Prioridade implements Serializable {
     @Size(max = 250)
     @NotNull
     @Column(name = "DESCRICAO", nullable = false, length = 250)
-    private String descricao;
+    private String description;
 
     @NotNull
     @Column(name = "ISCONCLUIDO", nullable = false)
-    private Boolean isconcluido = false;
+    private Boolean isConcluded = false;
 
     @NotNull
     @Column(name = "ORDEM", nullable = false)
-    private Integer ordem;
+    private Integer order;
 
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "IDFOLHA", nullable = false, foreignKey = @ForeignKey(name = "fk_pagamento_pedido"))
-    private Folha folha;
+    private Sheet sheet;
 
 
 }

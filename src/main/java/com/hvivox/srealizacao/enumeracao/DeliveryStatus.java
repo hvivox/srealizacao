@@ -1,28 +1,28 @@
 package com.hvivox.srealizacao.enumeracao;
 
-public enum StatusEntrega {
+public enum DeliveryStatus {
     ENVIADO(0, "Enviado"),
     EM_TRANSITO(1, "Em Trânsito"),
     ENTREGUE(9, "Entregue");
-    
+
     private final int codigo;
     private final String descricao;
-    
-    StatusEntrega(int codigo, String descricao) {
+
+    DeliveryStatus(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
-    
+
     public int getCodigo() {
         return codigo;
     }
-    
+
     public String getDescricao() {
         return descricao;
     }
-    
-    public static StatusEntrega fromCodigo(int codigo) {
-        for (StatusEntrega status : values()) {
+
+    public static DeliveryStatus fromCodigo(int codigo) {
+        for (DeliveryStatus status : values()) {
             if (status.getCodigo() == codigo) {
                 return status;
             }

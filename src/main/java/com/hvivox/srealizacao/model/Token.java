@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,7 +23,7 @@ public class Token {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "IDUSUARIO", nullable = false)
-    private Usuario idusuario;
+    private User userId;
 
     @Size(max = 1000)
     @NotNull
