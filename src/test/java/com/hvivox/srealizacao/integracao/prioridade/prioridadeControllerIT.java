@@ -1,6 +1,6 @@
 package com.hvivox.srealizacao.integracao.prioridade;
 
-import com.hvivox.srealizacao.model.Prioridade;
+import com.hvivox.srealizacao.model.Priority;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -22,7 +22,7 @@ public class prioridadeControllerIT {
 
     @LocalServerPort
     private int port;
-    
+
     @BeforeAll
     public void setUp(){
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
@@ -30,23 +30,23 @@ public class prioridadeControllerIT {
         RestAssured.basePath = "/prioridades";
         //RestAssured.basic("thiago", "123");
     }
-    
+
     @Test
     public void deveRetornarListaComStatus200_QuandoConsultarPrioridades(){
-        Prioridade prioridade = new Prioridade();
+        Priority prioridade = new Priority();
         prioridade.setId(1);
-        
+
         Response response =  RestAssured.given()
                 .pathParam("idPrioridade", prioridade.getId() )
                 .auth().basic("thiago", "123")
                 .accept(ContentType.JSON)
             .when()
                 .get("/folha/{idPrioridade}");
-        
+
         response.then().statusCode(HttpStatus.OK.value());
         // Verifica se a lista de prioridades não está vazia (caso esperado)
         response.then().body("size()", greaterThan(0));
-                
+
     }
-    
+
 }

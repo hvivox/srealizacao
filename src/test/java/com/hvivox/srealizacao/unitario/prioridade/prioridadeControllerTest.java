@@ -1,8 +1,8 @@
 package com.hvivox.srealizacao.unitario.prioridade;
 
-import com.hvivox.srealizacao.model.Prioridade;
-import com.hvivox.srealizacao.repository.PrioridadeRepository;
-import com.hvivox.srealizacao.service.PrioridadeService;
+import com.hvivox.srealizacao.model.Priority;
+import com.hvivox.srealizacao.repository.PriorityRepository;
+import com.hvivox.srealizacao.service.PriorityService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,21 +18,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 public class prioridadeControllerTest {
     @Mock
-    private PrioridadeRepository prioridadeRepository;
+    private PriorityRepository prioridadeRepository;
     @InjectMocks
-    private PrioridadeService prioridadeService;
-    
+    private PriorityService prioridadeService;
+
    @Test
     public void buscarPrioridadeTeste() {
-       Mockito.when(prioridadeRepository.findAllPrioridadeIntoFolha(1009))
+       Mockito.when(prioridadeRepository.findAllPriorityIntoSheet(1009))
                     .thenReturn(
-                         Arrays.asList(new Prioridade(1, "teste", false, 1, null ),
-                                 new Prioridade(2, "teste02", true, 2, null ))
+                         Arrays.asList(new Priority(1, "teste", false, 1, null ),
+                                 new Priority(2, "teste02", true, 2, null ))
                     );
-       
-       List<Prioridade> listaPrioridade = prioridadeService.findAllByFolha(1009);
-        
-        for ( Prioridade prioridade: listaPrioridade) {
+
+       List<Priority> listaPrioridade = prioridadeService.findAllBySheet(1009);
+
+        for ( Priority prioridade: listaPrioridade) {
             System.out.println( prioridade );
         };
         assertThat( listaPrioridade ).isNotNull();

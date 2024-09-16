@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "USUARIO")
-public class Usuario {
+public class User {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,12 @@ public class Usuario {
     @Size(max = 200)
     @NotNull
     @Column(name = "NOME", nullable = false, length = 200)
-    private String nome;
+    private String name;
 
     @Size(max = 50)
     @NotNull
     @Column(name = "USUARIO", nullable = false, length = 50)
-    private String usuario;
+    private String user;
 
     @Size(max = 200)
     @NotNull
@@ -35,10 +35,10 @@ public class Usuario {
     @Size(max = 200)
     @NotNull
     @Column(name = "SENHA", nullable = false, length = 200)
-    private String senha;
+    private String password;
 
     @Column(name = "ATIVO", columnDefinition = "tinyint")
-    private Short ativo;
+    private Short active;
 
 
 }
