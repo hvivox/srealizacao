@@ -17,7 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "PRIORIDADE", indexes = { @Index(name = "indx_id", columnList = "IDPRIORIDADE") })
-public class Priority implements Serializable {
+public class Priority implements ISheetAssociation, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @EqualsAndHashCode.Include

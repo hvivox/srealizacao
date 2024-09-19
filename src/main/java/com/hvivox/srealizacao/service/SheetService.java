@@ -25,6 +25,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -66,121 +67,81 @@ public class SheetService {
 
     @Transactional
     public Sheet save(Sheet folha) {
-
         log.debug("POST Salvar dados {} ", folha.toString());
-        List<Priority> prioridades = new ArrayList<>();
-        List<Restriction> restricoes = new ArrayList<>();
-        List<Gratitude> gratidoes = new ArrayList<>();
-        List<Learning> aprendizagens = new ArrayList<>();
 
-        for (Priority prioridadeEncontrada : folha.getPriorityList()) {
-            Priority prioridade = new Priority();
-            BeanUtils.copyProperties(prioridadeEncontrada, prioridade);
-            prioridade.setSheet(folha);
-            prioridades.add(prioridade);
-        }
-
-        for (Restriction restricaoEncontrada : folha.getRestrictionList()) {
-            Restriction restricao = new Restriction();
-            BeanUtils.copyProperties(restricaoEncontrada, restricao);
-            restricao.setSheet(folha);
-            restricoes.add(restricao);
-        }
-
-        for (Gratitude gratidaoEncontrada : folha.getGratitudeList()) {
-            Gratitude gratidao = new Gratitude();
-            BeanUtils.copyProperties(gratidaoEncontrada, gratidao);
-            gratidao.setSheet(folha);
-            gratidoes.add(gratidao);
-        }
-
-        for (Learning aprendizagemEncontrada : folha.getLearningList()) {
-            Learning aprendizagem = new Learning();
-            BeanUtils.copyProperties(aprendizagemEncontrada, aprendizagem);
-            aprendizagem.setSheet(folha);
-            aprendizagens.add(aprendizagem);
-        }
-
-        folha.setPriorityList(prioridades);
-        folha.setRestrictionList(restricoes);
-        folha.setGratitudeList(gratidoes);
-        folha.setLearningList(aprendizagens);
+        folha.setPriorityList(copyAndSetSheet(folha.getPriorityList(), folha, Priority::new));
+        folha.setRestrictionList(copyAndSetSheet(folha.getRestrictionList(), folha, Restriction::new));
+        folha.setGratitudeList(copyAndSetSheet(folha.getGratitudeList(), folha, Gratitude::new));
+        folha.setLearningList(copyAndSetSheet(folha.getLearningList(), folha, Learning::new));
 
         return folhaRepository.save(folha);
+    }
+    //Metodo generico para SALVAR as listas de prioridades, restrições, gratidões e aprendizagens
+    private <T extends ISheetAssociation> List<T> copyAndSetSheet(List<T> originalList, Sheet folha, Supplier<T> constructor) {
+        List<T> newList = new ArrayList<>();
+        for (T item : originalList) {
+            T newItem = constructor.get();
+            BeanUtils.copyProperties(item, newItem);
+            newItem.setSheet(folha);
+            newList.add(newItem);
+        }
+        return newList;
     }
 
 
     @Transactional
     public Sheet update(SheetDto folhaInputDto, Integer idFolha) {
-
         Sheet folhaInput = new Sheet();
         BeanUtils.copyProperties(folhaInputDto, folhaInput);
 
         Sheet folhaEncontrada = findOrFail(idFolha);
+        updateSheetDetails(folhaEncontrada, folhaInput);
+
+        Sheet folhaObjectID = new Sheet();
+        folhaObjectID.setId(folhaEncontrada.getId());
+        deleteAllFromSheet(folhaEncontrada.getId());
+
+        updateSheetLists(folhaInput, folhaEncontrada, folhaObjectID);
+
+        return folhaRepository.save(folhaEncontrada);
+    }
+
+    private void updateSheetDetails(Sheet folhaEncontrada, Sheet folhaInput) {
         folhaEncontrada.setFocus(folhaInput.getFocus());
         folhaEncontrada.setRealizationDate(folhaInput.getRealizationDate());
         folhaEncontrada.setDayNote(folhaInput.getDayNote());
         folhaEncontrada.setObservation(folhaInput.getObservation());
         folhaEncontrada.setStatus(folhaInput.getStatus());
-
-        Sheet folhaObjectID = new Sheet();
-        folhaObjectID.setId(folhaEncontrada.getId());
-
-        prioridadeService.deleteAllFromSheet(folhaEncontrada.getId());
-        if (folhaInput.getPriorityList() != null && !folhaInput.getPriorityList().isEmpty()) {
-
-            for (Priority prioridadeEncontrada : folhaInput.getPriorityList()) {
-                Priority prioridade = new Priority();
-                BeanUtils.copyProperties(prioridadeEncontrada, prioridade, "folha");
-
-                prioridade.setSheet(folhaObjectID);
-                log.debug("atributo prioridade {}", prioridade);
-                folhaEncontrada.getPriorityList().add(prioridade);
-            }
-
-        }
-
-        restricaoService.deleteAllFromSheet(folhaEncontrada.getId());
-
-        if (folhaInput.getRestrictionList() != null && !folhaInput.getRestrictionList().isEmpty()) {
-
-            for (Restriction restricaoEncontrada : folhaInput.getRestrictionList()) {
-
-                Restriction restricao = new Restriction();
-                BeanUtils.copyProperties(restricaoEncontrada, restricao, "folha");
-                restricao.setSheet(folhaObjectID);
-                folhaEncontrada.getRestrictionList().add(restricao);
-            }
-        }
-
-        gratidaoService.deleteAllFromSheet(folhaEncontrada.getId());
-        if (folhaInput.getGratitudeList() != null && !folhaInput.getGratitudeList().isEmpty()) {
-            for (Gratitude gratidaoEncontrada : folhaInput.getGratitudeList()) {
-                Gratitude gratidao = new Gratitude();
-                BeanUtils.copyProperties(gratidaoEncontrada, gratidao, "folha");
-                gratidao.setSheet(folhaObjectID);
-                folhaEncontrada.getGratitudeList().add(gratidao);
-            }
-
-        }
-
-
-        aprendizagemService.deleteAllFromSheet(folhaEncontrada.getId());
-        if (folhaInput.getLearningList() != null && !folhaInput.getLearningList().isEmpty()) {
-
-            for (Learning aprendizagemEncontrada : folhaInput.getLearningList()) {
-                Learning aprendizagem = new Learning();
-                BeanUtils.copyProperties(aprendizagemEncontrada, aprendizagem, "folha");
-                aprendizagem.setSheet(folhaObjectID);
-                folhaEncontrada.getLearningList().add(aprendizagem);
-            }
-
-        }
-
-        return folhaRepository.save(folhaEncontrada);
-
     }
 
+    private void updateSheetLists(Sheet folhaInput, Sheet folhaEncontrada, Sheet folhaObjectID) {
+        updateList(folhaInput.getPriorityList(), folhaEncontrada.getPriorityList(), folhaObjectID, Priority::new);
+        updateList(folhaInput.getRestrictionList(), folhaEncontrada.getRestrictionList(), folhaObjectID, Restriction::new);
+        updateList(folhaInput.getGratitudeList(), folhaEncontrada.getGratitudeList(), folhaObjectID, Gratitude::new);
+        updateList(folhaInput.getLearningList(), folhaEncontrada.getLearningList(), folhaObjectID, Learning::new);
+    }
+
+    //Metodo generico para atualizar as listas de prioridades, restrições, gratidões e aprendizagens
+    private <T extends ISheetAssociation > void updateList(List<T> inputList, List<T> foundList, Sheet folhaObjectID, Supplier<T> constructor) {
+        if (inputList != null && !inputList.isEmpty()) {
+            for (T item : inputList) {
+                T newItem = constructor.get();
+                BeanUtils.copyProperties(item, newItem, "folha");
+                newItem.setSheet(folhaObjectID);
+                foundList.add(newItem);
+            }
+        }
+    }
+
+
+    @Transactional
+    public void deleteAllFromSheet(Integer idFolha) {
+        Sheet folha = findOrFail(idFolha);
+        prioridadeService.deleteAllFromSheet(folha.getId());
+        restricaoService.deleteAllFromSheet(folha.getId());
+        gratidaoService.deleteAllFromSheet(folha.getId());
+        aprendizagemService.deleteAllFromSheet(folha.getId());
+    }
 
     @Transactional
     public void delete(Integer idFolha) {
