@@ -13,7 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "RESTRICAO")
-public class Restriction implements Serializable {
+public class Restriction implements ISheetAssociation, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @EqualsAndHashCode.Include

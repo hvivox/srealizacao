@@ -82,7 +82,7 @@ public class SheetController {
 
     @PutMapping("/{sheetId}")
     public ResponseEntity<Object> update(@PathVariable Integer sheetId, @Valid @RequestBody SheetDto sheetDto) {
-        // log.debug("PUT Update dados {} e idFolha:{} ", folha.toString(), idFolha);
+
        /* ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);*/
@@ -91,9 +91,8 @@ public class SheetController {
             Sheet sheetUpdated = sheetService.update(sheetDto, sheetId);
             return ResponseEntity.status(HttpStatus.OK).body(sheetUpdated);
         } catch (SheetNotFoundException e) {
-            //retorna BAD_REQUEST | 400, a resposta na estrutura padrao do spring
-            // Corrigi o problema da resposta ficar com o NOT_FOUND 404
-            // log.debug( "CAUSA DO PROBLEMA {}", e.getCause() );
+
+            log.debug( "CAUSA DO PROBLEMA {}", e.getCause() );
             throw new BusinessException(e.getMessage(), e);
 
         }

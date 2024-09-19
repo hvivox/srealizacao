@@ -48,22 +48,22 @@ public class Sheet implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private Boolean status = false;
 
-   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @OneToMany(mappedBy = "sheet", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
             CascadeType.MERGE}, orphanRemoval = true)
     private List<Priority> priorityList = new ArrayList<>();
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @OneToMany(mappedBy = "sheet", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
     private List<Restriction> restrictionList = new ArrayList<>();
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @OneToMany(mappedBy = "sheet", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
     private List<Gratitude> gratitudeList = new ArrayList<>();
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @OneToMany(mappedBy = "sheet", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
     private List<Learning> learningList = new ArrayList<>();
