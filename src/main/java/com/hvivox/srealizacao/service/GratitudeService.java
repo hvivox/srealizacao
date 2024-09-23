@@ -4,12 +4,12 @@ import com.hvivox.srealizacao.exception.EntityInUseException;
 import com.hvivox.srealizacao.exception.EntityNotFoundException;
 import com.hvivox.srealizacao.model.Gratitude;
 import com.hvivox.srealizacao.repository.GratitudeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
