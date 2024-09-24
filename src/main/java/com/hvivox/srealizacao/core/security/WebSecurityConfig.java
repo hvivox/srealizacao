@@ -1,22 +1,32 @@
 package com.hvivox.srealizacao.core.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//@Configuration
+//@EnableWebSecurity
+public class WebSecurityConfig {
 
-@Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	
+	//LIBERAÇÃO DE ACESSO AOS RECURSOS AUTENTICAO E AUTORIZAÇÃO. UTILIZADA PELO SPRING SECURITY SEM KEYCLOAK
 
-	
-	/*@Override
+ /*   @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests(authorizeRequests -> authorizeRequests
+                        .anyRequest().permitAll()
+                )
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+*/
+
+
+    /*@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
 			.withUser("thiago")
@@ -27,50 +37,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.password(passwordEncoder().encode("123"))
 				.roles("ADMIN");
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.httpBasic()
-			
+
 			.and()
 			.authorizeRequests()
 				.antMatchers("/folhas/**").permitAll()
 				.anyRequest().authenticated()
-			
+
 			.and()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				
+
 			.and()
 				.csrf().disable();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	*/
-	
 
-	
-	//LIBERAÇÃO DE ACESSO AOS RECURSOS AUTENTICAO E AUTORIZAÇÃO
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.authorizeRequests()
-				.anyRequest().permitAll()
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.csrf().disable();
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	
 }
