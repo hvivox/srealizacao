@@ -33,7 +33,9 @@ public class LoginService {
     private HttpComponent httpComponent;
 
     public ResponseEntity<?> login(UserKeycloack userKeycloack) {
-        log.info("Login: {}", "Acessando loginController");
+        log.info("Login: gt{}", "Acessando loginController");
+
+        String tokenEndpoint = keycloackServiceUrl + "/protocol/openid-connect/token";
         httpComponent.httpHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params = HttpParamsMapBuilderKeyCloack.builder()
                 .withClient(clientId)
@@ -46,7 +48,7 @@ public class LoginService {
 
         try {
             ResponseEntity<String> response = httpComponent.restTemplate()
-                    .postForEntity(keycloackServiceUrl + "/protocol/openid-connect/token",
+                    .postForEntity(tokenEndpoint,
                             request,
                             String.class);
             return ResponseEntity.ok(response.getBody());

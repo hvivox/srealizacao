@@ -6,14 +6,17 @@ import com.hvivox.srealizacao.exception.EntityNotFoundException;
 import com.hvivox.srealizacao.exception.SheetNotFoundException;
 import com.hvivox.srealizacao.model.Sheet;
 import com.hvivox.srealizacao.service.*;
-import com.hvivox.srealizacao.specifications.SpecificationTemplate;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -48,11 +51,14 @@ public class SheetController {
 
 
     @GetMapping
-    public ResponseEntity<Page<Sheet>> getAll(SpecificationTemplate.FolhaSpec spec, @PageableDefault(page = 0, size =
-            10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<Page<Sheet>> getAll(
+            @Spec(path = "focus", spec = LikeIgnoreCase.class) Specification<Sheet> focusSpec,
+            @Spec(path = "daynote", spec = Equal.class) Specification<Sheet> daynoteSpec,
+            @Spec(path = "status", spec = Equal.class) Specification<Sheet> statusSpec,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
+        Specification<Sheet> spec = Specification.where(focusSpec).and(daynoteSpec).and(statusSpec);
         Page<Sheet> sheetPage = sheetService.findAll(spec, pageable);
-        //ResponseEntity está sendo usado como exemplo para monstrar a forma de utilização
         return ResponseEntity.status(HttpStatus.OK).body(sheetPage);
     }
 
