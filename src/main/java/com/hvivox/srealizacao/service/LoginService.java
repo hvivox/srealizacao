@@ -2,7 +2,7 @@ package com.hvivox.srealizacao.service;
 
 import com.hvivox.srealizacao.component.HttpComponent;
 import com.hvivox.srealizacao.model.UserKeycloack;
-import com.hvivox.srealizacao.util.HttpParamsMapBuilderKeyCloack;
+import com.hvivox.srealizacao.util.HttpParamsMapKeyCloackBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class LoginService {
 
         String tokenEndpoint = keycloackServiceUrl + "/protocol/openid-connect/token";
         httpComponent.httpHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        MultiValueMap<String, String> params = HttpParamsMapBuilderKeyCloack.builder()
+        MultiValueMap<String, String> params = HttpParamsMapKeyCloackBuilder.builder()
                 .withClient(clientId)
                 .withClientSecret(clientSecret)
                 .withGrantType(grantType)
@@ -65,7 +65,7 @@ public class LoginService {
         log.info("RefreshToken: {}", "Acessando refreshToken");
         httpComponent.httpHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> params = HttpParamsMapBuilderKeyCloack.builder()
+        MultiValueMap<String, String> params = HttpParamsMapKeyCloackBuilder.builder()
                 .withClient(clientId)
                 .withClientSecret(clientSecret)
                 .withGrantType("refresh_token")

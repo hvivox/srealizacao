@@ -39,15 +39,6 @@ public class SheetController {
     @Autowired
     private SheetService sheetService;
 
-    @Autowired
-    private PriorityService priorityService;
-    @Autowired
-    private RestrictionService restrictionService;
-    @Autowired
-    private GratitudeService gratitudeService;
-
-    @Autowired
-    private LearningService learningService;
 
 
     @GetMapping
@@ -89,10 +80,7 @@ public class SheetController {
     @PutMapping("/{sheetId}")
     public ResponseEntity<Object> update(@PathVariable Integer sheetId, @Valid @RequestBody SheetDto sheetDto) {
 
-       /* ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);*/
-        // TODO SDFSFS
+
         try {
             Sheet sheetUpdated = sheetService.update(sheetDto, sheetId);
             return ResponseEntity.status(HttpStatus.OK).body(sheetUpdated);
@@ -127,7 +115,9 @@ public class SheetController {
 
 
     @GetMapping(path = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+    public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                      LocalDate startDate, @RequestParam("endDate")
+                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         try {
             LocalDateTime startDateTime = startDate.atStartOfDay();
             LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
@@ -142,8 +132,7 @@ public class SheetController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-      /*  folhaService.gerarExcelFolha();
-        return ResponseEntity.status(HttpStatus.OK).body("relat gerado");*/
+
     }
 
 }

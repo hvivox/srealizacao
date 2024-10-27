@@ -8,7 +8,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -18,7 +17,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,18 +24,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class KeycloakConfig {
 
     @Value("${keycloak.auth-server-url}")
     private String keycloakServerUrl;
 
+    @Value("${srealizacao.frontend.url}")
+    private String frontendUrl;
+
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(AbstractHttpConfigurer::disable)//TODO NESSARIO ABILITAR PARA PRODUÇÃO, DESABILITADO PARA TESTES
+        http.csrf(csrf -> csrf  // CSRF habilitado
+                .ignoringRequestMatchers("/login", "/refresh"))//TODO NESSARIO ABILITAR PARA PRODUÇÃO, DESABILITADO PARA TESTES
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adiciona configuração de CORS
                 .authorizeHttpRequests(auth ->{
                     auth.requestMatchers("login").permitAll();
@@ -48,7 +51,8 @@ public class SecurityConfig {
                 })
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())
                         .jwtAuthenticationConverter(jwtAuthenticationConverterForKeycloak())));
-
+                /*oauth2ResourceServer: Configura o Spring Security para usar um servidor de recursos OAuth2,
+                que espera um token JWT no cabeçalho Authorization.*/
         return http.build();
     }
 
@@ -70,33 +74,17 @@ public class SecurityConfig {
                     .collect(Collectors.toList());
         };
 
-
-
-
-
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
     }
 
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); // Adicione o domínio do seu frontend aqui
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
     private UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); // Adicione o domínio do seu frontend aqui
+        config.addAllowedOrigin(frontendUrl); // Adicione o domínio do seu frontend aqui
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
