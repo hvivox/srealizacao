@@ -6,14 +6,17 @@ import com.hvivox.srealizacao.exception.EntityNotFoundException;
 import com.hvivox.srealizacao.exception.SheetNotFoundException;
 import com.hvivox.srealizacao.model.Sheet;
 import com.hvivox.srealizacao.service.*;
-import com.hvivox.srealizacao.specifications.SpecificationTemplate;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -36,23 +39,17 @@ public class SheetController {
     @Autowired
     private SheetService sheetService;
 
-    @Autowired
-    private PriorityService priorityService;
-    @Autowired
-    private RestrictionService restrictionService;
-    @Autowired
-    private GratitudeService gratitudeService;
-
-    @Autowired
-    private LearningService learningService;
 
 
     @GetMapping
-    public ResponseEntity<Page<Sheet>> getAll(SpecificationTemplate.FolhaSpec spec, @PageableDefault(page = 0, size =
-            10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<Page<Sheet>> getAll(
+            @Spec(path = "focus", spec = LikeIgnoreCase.class) Specification<Sheet> focusSpec,
+            @Spec(path = "daynote", spec = Equal.class) Specification<Sheet> daynoteSpec,
+            @Spec(path = "status", spec = Equal.class) Specification<Sheet> statusSpec,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
+        Specification<Sheet> spec = Specification.where(focusSpec).and(daynoteSpec).and(statusSpec);
         Page<Sheet> sheetPage = sheetService.findAll(spec, pageable);
-        //ResponseEntity está sendo usado como exemplo para monstrar a forma de utilização
         return ResponseEntity.status(HttpStatus.OK).body(sheetPage);
     }
 
@@ -83,10 +80,7 @@ public class SheetController {
     @PutMapping("/{sheetId}")
     public ResponseEntity<Object> update(@PathVariable Integer sheetId, @Valid @RequestBody SheetDto sheetDto) {
 
-       /* ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);*/
-        // TODO SDFSFS
+
         try {
             Sheet sheetUpdated = sheetService.update(sheetDto, sheetId);
             return ResponseEntity.status(HttpStatus.OK).body(sheetUpdated);
@@ -121,7 +115,9 @@ public class SheetController {
 
 
     @GetMapping(path = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+    public ResponseEntity<byte[]> getreportByDate(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                      LocalDate startDate, @RequestParam("endDate")
+                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         try {
             LocalDateTime startDateTime = startDate.atStartOfDay();
             LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
@@ -136,8 +132,7 @@ public class SheetController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-      /*  folhaService.gerarExcelFolha();
-        return ResponseEntity.status(HttpStatus.OK).body("relat gerado");*/
+
     }
 
 }

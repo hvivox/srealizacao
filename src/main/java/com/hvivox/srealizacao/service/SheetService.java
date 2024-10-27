@@ -33,56 +33,56 @@ import java.util.stream.Collectors;
 @Service
 public class SheetService {
 
-    private static final String MSG_FOLHA_EM_USO = "Folha de código %d não pode ser removida, pois está em uso";
+    private static final String MSG_SHEET_IN_USE = "Folha de código %d não pode ser removida, pois está em uso";
 
-    private static final String MSG_FOLHA_NAO_ENCONTRADA = "Não existe folha com cadastro de código %d";
+    private static final String MSG_SHEET_NOT_FOUND = "Não existe folha com cadastro de código %d";
 
-    private static final String MSG_ENTIDADE_NAO_ENCONTRADA = "Entidade não encontrada";
-
-    @Autowired
-    SheetRepository folhaRepository;
+    private static final String MSG_ENTITY_NOT_FOUND = "Entidade não encontrada";
 
     @Autowired
-    private PriorityService prioridadeService;
+    SheetRepository sheetRepository;
 
     @Autowired
-    private RestrictionService restricaoService;
+    private PriorityService priorityService;
 
     @Autowired
-    private GratitudeService gratidaoService;
+    private RestrictionService restrictionService;
 
     @Autowired
-    private LearningService aprendizagemService;
+    private GratitudeService gratitudeService;
+
+    @Autowired
+    private LearningService learningService;
 
 
     public Page<Sheet> findAll(Specification<Sheet> spec, Pageable pageable) {
-        return folhaRepository.findAll(spec, pageable);
+        return sheetRepository.findAll(spec, pageable);
     }
 
 
     public Sheet findOrFail(Integer idFolha) {
-        return folhaRepository.findById(idFolha).orElseThrow(() -> new SheetNotFoundException(idFolha));
+        return sheetRepository.findById(idFolha).orElseThrow(() -> new SheetNotFoundException(idFolha));
     }
 
 
     @Transactional
-    public Sheet save(Sheet folha) {
-        log.debug("POST Salvar dados {} ", folha.toString());
+    public Sheet save(Sheet sheet) {
+        log.debug("POST Salvar dados {} ", sheet.toString());
 
-        folha.setPriorityList(copyAndSetSheet(folha.getPriorityList(), folha, Priority::new));
-        folha.setRestrictionList(copyAndSetSheet(folha.getRestrictionList(), folha, Restriction::new));
-        folha.setGratitudeList(copyAndSetSheet(folha.getGratitudeList(), folha, Gratitude::new));
-        folha.setLearningList(copyAndSetSheet(folha.getLearningList(), folha, Learning::new));
+        sheet.setPriorityList(copyAndSetSheet(sheet.getPriorityList(), sheet, Priority::new));
+        sheet.setRestrictionList(copyAndSetSheet(sheet.getRestrictionList(), sheet, Restriction::new));
+        sheet.setGratitudeList(copyAndSetSheet(sheet.getGratitudeList(), sheet, Gratitude::new));
+        sheet.setLearningList(copyAndSetSheet(sheet.getLearningList(), sheet, Learning::new));
 
-        return folhaRepository.save(folha);
+        return sheetRepository.save(sheet);
     }
     //Metodo generico para SALVAR as listas de prioridades, restrições, gratidões e aprendizagens
-    private <T extends ISheetAssociation> List<T> copyAndSetSheet(List<T> originalList, Sheet folha, Supplier<T> constructor) {
+    private <T extends ISheetAssociation> List<T> copyAndSetSheet(List<T> originalList, Sheet sheet, Supplier<T> constructor) {
         List<T> newList = new ArrayList<>();
         for (T item : originalList) {
             T newItem = constructor.get();
             BeanUtils.copyProperties(item, newItem);
-            newItem.setSheet(folha);
+            newItem.setSheet(sheet);
             newList.add(newItem);
         }
         return newList;
@@ -90,44 +90,44 @@ public class SheetService {
 
 
     @Transactional
-    public Sheet update(SheetDto folhaInputDto, Integer idFolha) {
-        Sheet folhaInput = new Sheet();
-        BeanUtils.copyProperties(folhaInputDto, folhaInput);
+    public Sheet update(SheetDto SheetInputDto, Integer idSheet) {
+        Sheet sheetInput = new Sheet();
+        BeanUtils.copyProperties(SheetInputDto, sheetInput);
 
-        Sheet folhaEncontrada = findOrFail(idFolha);
-        updateSheetDetails(folhaEncontrada, folhaInput);
+        Sheet sheetFound = findOrFail(idSheet);
+        updateSheetDetails(sheetFound, sheetInput);
 
-        Sheet folhaObjectID = new Sheet();
-        folhaObjectID.setId(folhaEncontrada.getId());
-        deleteAllFromSheet(folhaEncontrada.getId());
+        Sheet sheetObjectID = new Sheet();
+        sheetObjectID.setId(sheetFound.getId());
+        deleteAllFromSheet(sheetFound.getId());
 
-        updateSheetLists(folhaInput, folhaEncontrada, folhaObjectID);
+        updateSheetLists(sheetInput, sheetFound, sheetObjectID);
 
-        return folhaRepository.save(folhaEncontrada);
+        return sheetRepository.save(sheetFound);
     }
 
-    private void updateSheetDetails(Sheet folhaEncontrada, Sheet folhaInput) {
-        folhaEncontrada.setFocus(folhaInput.getFocus());
-        folhaEncontrada.setRealizationDate(folhaInput.getRealizationDate());
-        folhaEncontrada.setDayNote(folhaInput.getDayNote());
-        folhaEncontrada.setObservation(folhaInput.getObservation());
-        folhaEncontrada.setStatus(folhaInput.getStatus());
+    private void updateSheetDetails(Sheet sheetFound, Sheet sheetInput) {
+        sheetFound.setFocus(sheetInput.getFocus());
+        sheetFound.setRealizationDate(sheetInput.getRealizationDate());
+        sheetFound.setDayNote(sheetInput.getDayNote());
+        sheetFound.setObservation(sheetInput.getObservation());
+        sheetFound.setStatus(sheetInput.getStatus());
     }
 
-    private void updateSheetLists(Sheet folhaInput, Sheet folhaEncontrada, Sheet folhaObjectID) {
-        updateList(folhaInput.getPriorityList(), folhaEncontrada.getPriorityList(), folhaObjectID, Priority::new);
-        updateList(folhaInput.getRestrictionList(), folhaEncontrada.getRestrictionList(), folhaObjectID, Restriction::new);
-        updateList(folhaInput.getGratitudeList(), folhaEncontrada.getGratitudeList(), folhaObjectID, Gratitude::new);
-        updateList(folhaInput.getLearningList(), folhaEncontrada.getLearningList(), folhaObjectID, Learning::new);
+    private void updateSheetLists(Sheet sheetInput, Sheet sheetEncontrada, Sheet sheetObjectID) {
+        updateList(sheetInput.getPriorityList(), sheetEncontrada.getPriorityList(), sheetObjectID, Priority::new);
+        updateList(sheetInput.getRestrictionList(), sheetEncontrada.getRestrictionList(), sheetObjectID, Restriction::new);
+        updateList(sheetInput.getGratitudeList(), sheetEncontrada.getGratitudeList(), sheetObjectID, Gratitude::new);
+        updateList(sheetInput.getLearningList(), sheetEncontrada.getLearningList(), sheetObjectID, Learning::new);
     }
 
     //Metodo generico para atualizar as listas de prioridades, restrições, gratidões e aprendizagens
-    private <T extends ISheetAssociation > void updateList(List<T> inputList, List<T> foundList, Sheet folhaObjectID, Supplier<T> constructor) {
+    private <T extends ISheetAssociation > void updateList(List<T> inputList, List<T> foundList, Sheet sheetObjectID, Supplier<T> constructor) {
         if (inputList != null && !inputList.isEmpty()) {
             for (T item : inputList) {
                 T newItem = constructor.get();
                 BeanUtils.copyProperties(item, newItem, "folha");
-                newItem.setSheet(folhaObjectID);
+                newItem.setSheet(sheetObjectID);
                 foundList.add(newItem);
             }
         }
@@ -135,23 +135,23 @@ public class SheetService {
 
 
     @Transactional
-    public void deleteAllFromSheet(Integer idFolha) {
-        Sheet folha = findOrFail(idFolha);
-        prioridadeService.deleteAllFromSheet(folha.getId());
-        restricaoService.deleteAllFromSheet(folha.getId());
-        gratidaoService.deleteAllFromSheet(folha.getId());
-        aprendizagemService.deleteAllFromSheet(folha.getId());
+    public void deleteAllFromSheet(Integer idSheet) {
+        Sheet sheet = findOrFail(idSheet);
+        priorityService.deleteAllFromSheet(sheet.getId());
+        restrictionService.deleteAllFromSheet(sheet.getId());
+        gratitudeService.deleteAllFromSheet(sheet.getId());
+        learningService.deleteAllFromSheet(sheet.getId());
     }
 
     @Transactional
-    public void delete(Integer idFolha) {
+    public void delete(Integer idSheet) {
 
         try {
-            folhaRepository.deleteById(idFolha);
+            sheetRepository.deleteById(idSheet);
         } catch (EmptyResultDataAccessException e) {
-            throw new SheetNotFoundException(String.format(MSG_FOLHA_NAO_ENCONTRADA, idFolha));
+            throw new SheetNotFoundException(String.format(MSG_SHEET_NOT_FOUND, idSheet));
         } catch (DataIntegrityViolationException e) {
-            throw new EntityInUseException(String.format(MSG_FOLHA_EM_USO, idFolha));
+            throw new EntityInUseException(String.format(MSG_SHEET_IN_USE, idSheet));
         }
     }
 
@@ -161,7 +161,7 @@ public class SheetService {
         Workbook workbook = new HSSFWorkbook();
         org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Relatório de Vendas");
 
-        List<Sheet> folhaEntradaList = folhaRepository.findAll();
+        List<Sheet> folhaEntradaList = sheetRepository.findAll();
 
         log.info("Configurando o cabeçalho da planilha");
         Row headerRow = sheet.createRow(0);
@@ -237,6 +237,6 @@ public class SheetService {
 
 
     public void inactiveSheet(Sheet folhaEncontrada) {
-        folhaRepository.save(folhaEncontrada);
+        sheetRepository.save(folhaEncontrada);
     }
 }
