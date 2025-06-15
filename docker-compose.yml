@@ -12,7 +12,7 @@ services:
         volumes:
             - ../DOCKER/BANCOS/postgres-data:/var/lib/postgresql/data
         networks:
-            - srealizacao-network  # Associado à rede aqui!
+            - srealizacao-net
 
     sqlserver_db:
         image: mcr.microsoft.com/mssql/server:2019-latest
@@ -32,7 +32,13 @@ services:
             - ../DOCKER/BANCOS/sqlserver-data/secrets:/var/opt/mssql/secrets
             #- ./BANCOS/sqlserver-data:/var/opt/mssql
         networks:
-            - srealizacao-network  # Associado à rede aqui!
+            - srealizacao-net
+        healthcheck:
+            test: [ "CMD", "bash", "-c", "echo > /dev/tcp/localhost/1433" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        # Associado à rede aqui!
     app:
         build:
             context: .
@@ -41,15 +47,16 @@ services:
         ports:
             - "8080:8080"
         depends_on:
-            - sqlserver_db
+            sqlserver_db:
+                condition: service_healthy
         environment:
             DB_URL: jdbc:sqlserver://sqlserver_express:1433;databaseName=srealizacao;integratedSecurity=false;encrypt=true;trustServerCertificate=true;serverTimezone=UTC
 
         networks:
-            - srealizacao-network
+            - srealizacao-net
 
 
 networks:
-    srealizacao-network:
+    srealizacao-net:
         driver: bridge
 
