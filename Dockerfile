@@ -6,10 +6,11 @@ RUN apk add --no-cache openjdk21-jre
 
 # Define uma variável de ambiente para o ambiente de execução da aplicação.
 # Quando não especificado, o padrão será 'dev'.
-ARG ENVIRONMENT=dev
+ARG ENVIRONMENT=homolog
 
-# Define uma variável de ambiente com o nome do JAR a ser executado
-ENV JAR_NAME=srealizacao-backend.jar
+# Define uma variável de ambiente com o nome do JAR e defini o tipo do profile ativo
+ENV JAR_NAME=srealizacao-backend.jar \
+    SPRING_PROFILES_ACTIVE=$ENVIRONMENT
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app

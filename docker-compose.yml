@@ -45,14 +45,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            args:
+                - ENVIRONMENT=homolog #sobrescrever no Dockerfile
         container_name: srealizacao-backend
         ports:
             - "8080:8080"
         depends_on:
             sqlserver_db:
                 condition: service_healthy
-        environment:
-            DB_URL: jdbc:sqlserver://sqlserver_express:1433;databaseName=srealizacao;integratedSecurity=false;encrypt=true;trustServerCertificate=true;serverTimezone=UTC
 
         networks:
             - srealizacao-net
