@@ -2,7 +2,7 @@ services:
     postgres_db:
         image: postgres:15
         container_name: postgres_for_srealizacao
-        # restart: always
+
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
@@ -24,21 +24,23 @@ services:
             MSSQL_PID: Express
             MSSQL_ENABLE_COREDUMP: 0  # impede dumps gigantes
             MSSQL_FORCE_ENCRYPTION: 0
+
         ports:
             - "1433:1433"
+
         volumes:
             - ../DOCKER/BANCOS/sqlserver-data/data:/var/opt/mssql/data
             - ../DOCKER/BANCOS/sqlserver-data/log:/var/opt/mssql/log
             - ../DOCKER/BANCOS/sqlserver-data/secrets:/var/opt/mssql/secrets
-            #- ./BANCOS/sqlserver-data:/var/opt/mssql
         networks:
             - srealizacao-net
+
         healthcheck:
             test: [ "CMD", "bash", "-c", "echo > /dev/tcp/localhost/1433" ]
             interval: 10s
             timeout: 5s
             retries: 5
-        # Associado à rede aqui!
+
     app:
         build:
             context: .
