@@ -1,0 +1,55 @@
+services:
+    postgres_db:
+        image: postgres:15
+        container_name: postgres_for_srealizacao
+        # restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: decode
+        ports:
+            - "5432:5432"
+        volumes:
+            - ../DOCKER/BANCOS/postgres-data:/var/lib/postgresql/data
+        networks:
+            - srealizacao-network  # Associado à rede aqui!
+
+    sqlserver_db:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        container_name: sqlserver_express
+
+        environment:
+            ACCEPT_EULA: Y
+            MSSQL_SA_PASSWORD: "12345678"
+            MSSQL_PID: Express
+            MSSQL_ENABLE_COREDUMP: 0  # impede dumps gigantes
+            MSSQL_FORCE_ENCRYPTION: 0
+        ports:
+            - "1433:1433"
+        volumes:
+            - ../DOCKER/BANCOS/sqlserver-data/data:/var/opt/mssql/data
+            - ../DOCKER/BANCOS/sqlserver-data/log:/var/opt/mssql/log
+            - ../DOCKER/BANCOS/sqlserver-data/secrets:/var/opt/mssql/secrets
+            #- ./BANCOS/sqlserver-data:/var/opt/mssql
+        networks:
+            - srealizacao-network  # Associado à rede aqui!
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: srealizacao-backend
+        ports:
+            - "8080:8080"
+        depends_on:
+            - sqlserver_db
+        environment:
+            DB_URL: jdbc:sqlserver://sqlserver_express:1433;databaseName=srealizacao;integratedSecurity=false;encrypt=true;trustServerCertificate=true;serverTimezone=UTC
+
+        networks:
+            - srealizacao-network
+
+
+networks:
+    srealizacao-network:
+        driver: bridge
+

@@ -4,6 +4,10 @@ FROM alpine:3.21
 # Instala o JRE do OpenJDK 21 sem cache (necessário para rodar aplicações Java)
 RUN apk add --no-cache openjdk21-jre
 
+# Define uma variável de ambiente para o ambiente de execução da aplicação.
+# Quando não especificado, o padrão será 'dev'.
+ARG ENVIRONMENT=dev
+
 # Define uma variável de ambiente com o nome do JAR a ser executado
 ENV JAR_NAME=srealizacao-backend.jar
 
