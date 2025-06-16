@@ -1,0 +1,40 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_keycloak
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - ../DOCKER/KEYCLOACK_POSTGRES/POSTGRES:/var/lib/postgresql/data
+      - ../DOCKER/KEYCLOACK_POSTGRES/init-schema.sql:/docker-entrypoint-initdb.d/init-schema.sql
+    ports:
+      - 3333:5432
+    networks:
+      - srealizacao-net
+  keycloak:
+    image: quay.io/keycloak/keycloak:legacy
+    container_name: keycloak_docker
+    volumes:
+      - ../DOCKER/KEYCLOACK_POSTGRES/KEYCLOACK_POSTGRES/KEYCLOACK:/opt/jboss/keycloak/standalone/data
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres_keycloak
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: keycloak_schema
+      DB_PASSWORD: keycloak
+     # KEYCLOAK_USER: admin
+     # KEYCLOAK_PASSWORD: admin
+    ports:
+      - 8082:8080
+    depends_on:
+      - postgres
+    networks:
+      - srealizacao-net
+
+networks:
+    srealizacao-net:
+        driver: bridge

@@ -1,7 +1,10 @@
+include:
+    - docker-compose-keycloak-postgres.yml
+
 services:
     postgres_db:
         image: postgres:15
-        container_name: postgres_for_srealizacao
+        container_name: postgres_srealizacao
 
         environment:
             POSTGRES_USER: postgres
