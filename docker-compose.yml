@@ -53,13 +53,17 @@ services:
         container_name: srealizacao-backend
         ports:
             - "8080:8080"
+        networks:
+            - srealizacao-net
         depends_on:
             sqlserver_db:
                 condition: service_healthy
-
-        networks:
-            - srealizacao-net
-
+        healthcheck:
+            test: ["CMD", "sh", "-C", "curl -f http://localhost:$8080/actuator/helth | grep -i UP || exit 1"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+            start_period: 10s
 
 networks:
     srealizacao-net:
