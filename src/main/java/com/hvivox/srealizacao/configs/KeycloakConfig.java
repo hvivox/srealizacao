@@ -48,6 +48,7 @@ public class KeycloakConfig {
                     auth.requestMatchers("admin").hasAnyAuthority("ADMIN_READ","ADMIN_WRITE");
                     auth.requestMatchers("operation").hasAnyAuthority("OPERATION_READ","OPERATION_WRITE");
                     auth.requestMatchers("/sheets/**").authenticated();
+                    auth.requestMatchers("/actuator/**").permitAll();
                 })
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())
                         .jwtAuthenticationConverter(jwtAuthenticationConverterForKeycloak())));

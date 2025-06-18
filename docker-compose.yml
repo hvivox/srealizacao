@@ -1,0 +1,71 @@
+include:
+    - docker-compose-keycloak-postgres.yml
+
+services:
+    postgres_db:
+        image: postgres:15
+        container_name: postgres_srealizacao
+
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: decode
+        ports:
+            - "5432:5432"
+        volumes:
+            - ../DOCKER/BANCOS/postgres-data:/var/lib/postgresql/data
+        networks:
+            - srealizacao-net
+
+    sqlserver_db:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        container_name: sqlserver_express
+
+        environment:
+            ACCEPT_EULA: Y
+            MSSQL_SA_PASSWORD: "12345678"
+            MSSQL_PID: Express
+            MSSQL_ENABLE_COREDUMP: 0  # impede dumps gigantes
+            MSSQL_FORCE_ENCRYPTION: 0
+
+        ports:
+            - "1433:1433"
+
+        volumes:
+            - ../DOCKER/BANCOS/sqlserver-data/data:/var/opt/mssql/data
+            - ../DOCKER/BANCOS/sqlserver-data/log:/var/opt/mssql/log
+            - ../DOCKER/BANCOS/sqlserver-data/secrets:/var/opt/mssql/secrets
+        networks:
+            - srealizacao-net
+
+        healthcheck:
+            test: [ "CMD", "bash", "-c", "echo > /dev/tcp/localhost/1433" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - ENVIRONMENT=homolog #sobrescrever no Dockerfile
+        container_name: srealizacao-backend
+        ports:
+            - "8080:8080"
+        networks:
+            - srealizacao-net
+        depends_on:
+            sqlserver_db:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "sh", "-C", "curl -f http://localhost:$8080/actuator/helth | grep -i UP || exit 1"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+            start_period: 10s
+
+networks:
+    srealizacao-net:
+        driver: bridge
+
