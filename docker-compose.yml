@@ -9,7 +9,7 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: decode
+            POSTGRES_DB: srealizacao
         ports:
             - "5432:5432"
         volumes:
