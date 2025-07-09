@@ -67,7 +67,7 @@ public class SheetService {
 
     @Transactional
     public Sheet save(Sheet sheet) {
-        log.debug("POST Salvar dados {} ", sheet.toString());
+        log.info("POST Salvar dados {} ", sheet.toString());
 
         sheet.setPriorityList(copyAndSetSheet(sheet.getPriorityList(), sheet, Priority::new));
         sheet.setRestrictionList(copyAndSetSheet(sheet.getRestrictionList(), sheet, Restriction::new));

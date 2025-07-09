@@ -33,7 +33,7 @@ public class LoginService {
     private HttpComponent httpComponent;
 
     public ResponseEntity<?> login(UserKeycloack userKeycloack) {
-        log.info("Login: gt{}", "Acessando loginController");
+        log.info("Login: {}", "Acessando loginController");
 
         String tokenEndpoint = keycloackServiceUrl + "/protocol/openid-connect/token";
         httpComponent.httpHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
