@@ -26,13 +26,14 @@ public class PriorityController {
 
     @GetMapping("folha/{idFolha}")
     public ResponseEntity<List<Priority>> getPriorityBySheet(@PathVariable(value="idFolha") Integer idSheet ){
-        log.debug("POST getPrioridadeByFolha IDFolha {} ", idSheet);
+        log.info("getPriorityBySheet IDFolha {} ", idSheet);
         return ResponseEntity.status(HttpStatus.OK).body( priorityService.findAllBySheet( idSheet ) );
     }
 
+
     @PostMapping
     public ResponseEntity<Priority> save(@RequestBody Priority priority){
-        log.debug("POST salvar dados {} ", priority.toString());
+        log.info("POST salvar dados {} ", priority.toString());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(priorityService.save(priority));
 
