@@ -86,7 +86,7 @@ public class SheetController {
             return ResponseEntity.status(HttpStatus.OK).body(sheetUpdated);
         } catch (SheetNotFoundException e) {
 
-            log.debug( "CAUSA DO PROBLEMA {}", e.getCause() );
+            log.info( "CAUSA DO PROBLEMA {}", e.getCause() );
             throw new BusinessException(e.getMessage(), e);
 
         }

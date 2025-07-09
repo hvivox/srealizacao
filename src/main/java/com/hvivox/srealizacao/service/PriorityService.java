@@ -44,4 +44,13 @@ public class PriorityService {
             throw new EntityInUseException(String.format(MSG_PRIORITY_IN_USE));
         }
     }
+
+    @Transactional
+    public Priority updatePriority(Priority priority) {
+        try {
+            return priorityRepository.save(priority);
+        } catch (PriorityNotFoundException e) {
+            throw new BusinessException(e.getMessage(), e);
+        }
+    }
 }
