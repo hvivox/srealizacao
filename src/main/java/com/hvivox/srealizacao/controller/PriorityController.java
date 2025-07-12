@@ -15,7 +15,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("/prioridades")
+@RequestMapping("/priorities")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PriorityController {
     @Autowired
@@ -24,19 +24,17 @@ public class PriorityController {
     SheetService sheetService;
 
 
-    @GetMapping("folha/{idFolha}")
-    public ResponseEntity<List<Priority>> getPriorityBySheet(@PathVariable(value="idFolha") Integer idSheet ){
-        log.info("getPriorityBySheet IDFolha {} ", idSheet);
+    @GetMapping("sheet/{idSheet}")
+    public ResponseEntity<List<Priority>> getPriorityBySheet(@PathVariable(value="idSheet") Integer idSheet ){
+        log.info("Buscar prioridades associadas a Folha ID: {} ", idSheet);
         return ResponseEntity.status(HttpStatus.OK).body( priorityService.findAllBySheet( idSheet ) );
     }
 
 
     @PostMapping
     public ResponseEntity<Priority> save(@RequestBody Priority priority){
-        log.info("POST salvar dados {} ", priority.toString());
-
+        log.info("Salvar prioridade {} ", priority.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(priorityService.save(priority));
-
     }
 
    @DeleteMapping("{folhaId}")
