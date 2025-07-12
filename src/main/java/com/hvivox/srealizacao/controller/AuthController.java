@@ -22,6 +22,7 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(description = "Usuário passa o login para autenticação no Keycloack. Keycloack valida o login e retorna um token de autenticação.")
     public ResponseEntity<?> login(@Valid @RequestBody UserKeycloack userKeycloack) {
+        Thread.currentThread().setName(String.valueOf(System.currentTimeMillis()));
         log.info("Login: {}", "Acessando loginController");
         return loginService.login(userKeycloack);
 
@@ -31,6 +32,7 @@ public class AuthController {
     @PostMapping("/refresh")
     @Operation(description = "Usuário passa o token de autenticação para autenticação no Keycloack. Keycloack valida o token e retorna um novo token de autenticação.")
     public ResponseEntity<?> refresh(@RequestParam("refresh_token") String refeshToken) {
+        Thread.currentThread().setName(String.valueOf(System.currentTimeMillis()));
         log.info("Refresh: {}", "Acessando refreshController");
         return loginService.refreshToken(refeshToken);
 
