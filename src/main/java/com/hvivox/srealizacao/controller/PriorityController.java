@@ -26,6 +26,7 @@ public class PriorityController {
 
     @GetMapping("sheet/{idSheet}")
     public ResponseEntity<List<Priority>> getPriorityBySheet(@PathVariable(value="idSheet") Integer idSheet ){
+        Thread.currentThread().setName(String.valueOf(System.currentTimeMillis()));
         log.info("Buscar prioridades associadas a Folha ID: {} ", idSheet);
         return ResponseEntity.status(HttpStatus.OK).body( priorityService.findAllBySheet( idSheet ) );
     }
@@ -33,6 +34,7 @@ public class PriorityController {
 
     @PostMapping
     public ResponseEntity<Priority> save(@RequestBody Priority priority){
+        Thread.currentThread().setName(String.valueOf(System.currentTimeMillis()));
         log.info("Salvar prioridade {} ", priority.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(priorityService.save(priority));
     }
@@ -40,9 +42,8 @@ public class PriorityController {
    @DeleteMapping("{folhaId}")
    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteAllPriorities(@PathVariable(value = "folhaId") Integer folhaid ){
-        //log.debug("DELETE deletar todas as prioridades com ID {} ", courseId);
+       Thread.currentThread().setName(String.valueOf(System.currentTimeMillis()));
         Sheet sheetFound = sheetService.findOrFail(folhaid);
-        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         priorityService.deleteAllFromSheet( sheetFound.getId() );
 
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully.");
